@@ -1,0 +1,289 @@
+﻿Audience,Category,Country,Country Name,Subcategory,Percentage
+Global,General hotel feature importance,US,United States,Helps me relax and recharge,0.62
+Global,General hotel feature importance,US,United States,Makes me feel “in the know”,0.29
+Global,General hotel feature importance,US,United States,Makes me feel special/important,0.36
+Global,General hotel feature importance,US,United States,Is a brand for someone like me,0.48
+Global,General hotel feature importance,US,United States,Is a brand I would want to be seen using,0.36
+Global,General hotel feature importance,US,United States,Is a brand I trust,0.63
+Global,General hotel feature importance,UK,United Kingdom,Helps me relax and recharge,0.54
+Global,General hotel feature importance,UK,United Kingdom,Makes me feel “in the know”,0.22
+Global,General hotel feature importance,UK,United Kingdom,Makes me feel special/important,0.29
+Global,General hotel feature importance,UK,United Kingdom,Is a brand for someone like me,0.39
+Global,General hotel feature importance,UK,United Kingdom,Is a brand I would want to be seen using,0.24
+Global,General hotel feature importance,UK,United Kingdom,Is a brand I trust,0.53
+Global,General hotel feature importance,CN,China,Helps me relax and recharge,0.3
+Global,General hotel feature importance,CN,China,Makes me feel “in the know”,0.31
+Global,General hotel feature importance,CN,China,Makes me feel special/important,0.31
+Global,General hotel feature importance,CN,China,Is a brand for someone like me,0.32
+Global,General hotel feature importance,CN,China,Is a brand I would want to be seen using,0.25
+Global,General hotel feature importance,CN,China,Is a brand I trust,0.39
+Global,General hotel feature importance,UAE,United Arab Emirates,Helps me relax and recharge,0.55
+Global,General hotel feature importance,UAE,United Arab Emirates,Makes me feel “in the know”,0.4
+Global,General hotel feature importance,UAE,United Arab Emirates,Makes me feel special/important,0.45
+Global,General hotel feature importance,UAE,United Arab Emirates,Is a brand for someone like me,0.48
+Global,General hotel feature importance,UAE,United Arab Emirates,Is a brand I would want to be seen using,0.34
+Global,General hotel feature importance,UAE,United Arab Emirates,Is a brand I trust,0.54
+Global,General hotel feature importance,KSA,Saudi Arabia,Helps me relax and recharge,0.67
+Global,General hotel feature importance,KSA,Saudi Arabia,Makes me feel “in the know”,0.55
+Global,General hotel feature importance,KSA,Saudi Arabia,Makes me feel special/important,0.58
+Global,General hotel feature importance,KSA,Saudi Arabia,Is a brand for someone like me,0.61
+Global,General hotel feature importance,KSA,Saudi Arabia,Is a brand I would want to be seen using,0.46
+Global,General hotel feature importance,KSA,Saudi Arabia,Is a brand I trust,0.67
+Global,General hotel feature importance,DE,Germany,Helps me relax and recharge,0.44
+Global,General hotel feature importance,DE,Germany,Makes me feel “in the know”,0.26
+Global,General hotel feature importance,DE,Germany,Makes me feel special/important,0.32
+Global,General hotel feature importance,DE,Germany,Is a brand for someone like me,0.33
+Global,General hotel feature importance,DE,Germany,Is a brand I would want to be seen using,0.25
+Global,General hotel feature importance,DE,Germany,Is a brand I trust,0.38
+Global,General hotel feature importance,JP,Japan,Helps me relax and recharge,0.43
+Global,General hotel feature importance,JP,Japan,Makes me feel “in the know”,0.12
+Global,General hotel feature importance,JP,Japan,Makes me feel special/important,0.22
+Global,General hotel feature importance,JP,Japan,Is a brand for someone like me,0.21
+Global,General hotel feature importance,JP,Japan,Is a brand I would want to be seen using,0.15
+Global,General hotel feature importance,JP,Japan,Is a brand I trust,0.38
+Global,General hotel feature importance,IN,India,Helps me relax and recharge,0.68
+Global,General hotel feature importance,IN,India,Makes me feel “in the know”,0.52
+Global,General hotel feature importance,IN,India,Makes me feel special/important,0.58
+Global,General hotel feature importance,IN,India,Is a brand for someone like me,0.57
+Global,General hotel feature importance,IN,India,Is a brand I would want to be seen using,0.53
+Global,General hotel feature importance,IN,India,Is a brand I trust,0.69
+Global,Hilton satisfaction,US,United States,Helps me relax and recharge,0.53
+Global,Hilton satisfaction,US,United States,Makes me feel “in the know”,0.38
+Global,Hilton satisfaction,US,United States,Makes me feel special/important,0.44
+Global,Hilton satisfaction,US,United States,Is a brand for someone like me,0.48
+Global,Hilton satisfaction,US,United States,Is a brand I would want to be seen using,0.5
+Global,Hilton satisfaction,US,United States,Is a brand I trust,0.55
+Global,Hilton satisfaction,UK,United Kingdom,Helps me relax and recharge,0.41
+Global,Hilton satisfaction,UK,United Kingdom,Makes me feel “in the know”,0.3
+Global,Hilton satisfaction,UK,United Kingdom,Makes me feel special/important,0.37
+Global,Hilton satisfaction,UK,United Kingdom,Is a brand for someone like me,0.35
+Global,Hilton satisfaction,UK,United Kingdom,Is a brand I would want to be seen using,0.4
+Global,Hilton satisfaction,UK,United Kingdom,Is a brand I trust,0.42
+Global,Hilton satisfaction,CN,China,Helps me relax and recharge,0.35
+Global,Hilton satisfaction,CN,China,Makes me feel “in the know”,0.34
+Global,Hilton satisfaction,CN,China,Makes me feel special/important,0.36
+Global,Hilton satisfaction,CN,China,Is a brand for someone like me,0.35
+Global,Hilton satisfaction,CN,China,Is a brand I would want to be seen using,0.37
+Global,Hilton satisfaction,CN,China,Is a brand I trust,0.4
+Global,Hilton satisfaction,UAE,United Arab Emirates,Helps me relax and recharge,0.5
+Global,Hilton satisfaction,UAE,United Arab Emirates,Makes me feel “in the know”,0.46
+Global,Hilton satisfaction,UAE,United Arab Emirates,Makes me feel special/important,0.48
+Global,Hilton satisfaction,UAE,United Arab Emirates,Is a brand for someone like me,0.49
+Global,Hilton satisfaction,UAE,United Arab Emirates,Is a brand I would want to be seen using,0.48
+Global,Hilton satisfaction,UAE,United Arab Emirates,Is a brand I trust,0.53
+Global,Hilton satisfaction,KSA,Saudi Arabia,Helps me relax and recharge,0.61
+Global,Hilton satisfaction,KSA,Saudi Arabia,Makes me feel “in the know”,0.57
+Global,Hilton satisfaction,KSA,Saudi Arabia,Makes me feel special/important,0.62
+Global,Hilton satisfaction,KSA,Saudi Arabia,Is a brand for someone like me,0.63
+Global,Hilton satisfaction,KSA,Saudi Arabia,Is a brand I would want to be seen using,0.59
+Global,Hilton satisfaction,KSA,Saudi Arabia,Is a brand I trust,0.64
+Global,Hilton satisfaction,DE,Germany,Helps me relax and recharge,0.41
+Global,Hilton satisfaction,DE,Germany,Makes me feel “in the know”,0.31
+Global,Hilton satisfaction,DE,Germany,Makes me feel special/important,0.36
+Global,Hilton satisfaction,DE,Germany,Is a brand for someone like me,0.32
+Global,Hilton satisfaction,DE,Germany,Is a brand I would want to be seen using,0.34
+Global,Hilton satisfaction,DE,Germany,Is a brand I trust,0.35
+Global,Hilton satisfaction,JP,Japan,Helps me relax and recharge,0.33
+Global,Hilton satisfaction,JP,Japan,Makes me feel “in the know”,0.18
+Global,Hilton satisfaction,JP,Japan,Makes me feel special/important,0.26
+Global,Hilton satisfaction,JP,Japan,Is a brand for someone like me,0.2
+Global,Hilton satisfaction,JP,Japan,Is a brand I would want to be seen using,0.24
+Global,Hilton satisfaction,JP,Japan,Is a brand I trust,0.36
+Global,Hilton satisfaction,IN,India,Helps me relax and recharge,0.53
+Global,Hilton satisfaction,IN,India,Makes me feel “in the know”,0.46
+Global,Hilton satisfaction,IN,India,Makes me feel special/important,0.5
+Global,Hilton satisfaction,IN,India,Is a brand for someone like me,0.52
+Global,Hilton satisfaction,IN,India,Is a brand I would want to be seen using,0.49
+Global,Hilton satisfaction,IN,India,Is a brand I trust,0.55
+Global,Importance vs. satisfaction,US,United States,Helps me relax and recharge,-0.09
+Global,Importance vs. satisfaction,US,United States,Makes me feel “in the know”,0.09
+Global,Importance vs. satisfaction,US,United States,Makes me feel special/important,0.08
+Global,Importance vs. satisfaction,US,United States,Is a brand for someone like me,0
+Global,Importance vs. satisfaction,US,United States,Is a brand I would want to be seen using,0.14
+Global,Importance vs. satisfaction,US,United States,Is a brand I trust,-0.08
+Global,Importance vs. satisfaction,UK,United Kingdom,Helps me relax and recharge,-0.13
+Global,Importance vs. satisfaction,UK,United Kingdom,Makes me feel “in the know”,0.08
+Global,Importance vs. satisfaction,UK,United Kingdom,Makes me feel special/important,0.08
+Global,Importance vs. satisfaction,UK,United Kingdom,Is a brand for someone like me,-0.04
+Global,Importance vs. satisfaction,UK,United Kingdom,Is a brand I would want to be seen using,0.16
+Global,Importance vs. satisfaction,UK,United Kingdom,Is a brand I trust,-0.11
+Global,Importance vs. satisfaction,CN,China,Helps me relax and recharge,0.05
+Global,Importance vs. satisfaction,CN,China,Makes me feel “in the know”,0.03
+Global,Importance vs. satisfaction,CN,China,Makes me feel special/important,0.05
+Global,Importance vs. satisfaction,CN,China,Is a brand for someone like me,0.03
+Global,Importance vs. satisfaction,CN,China,Is a brand I would want to be seen using,0.12
+Global,Importance vs. satisfaction,CN,China,Is a brand I trust,0.01
+Global,Importance vs. satisfaction,UAE,United Arab Emirates,Helps me relax and recharge,-0.05
+Global,Importance vs. satisfaction,UAE,United Arab Emirates,Makes me feel “in the know”,0.06
+Global,Importance vs. satisfaction,UAE,United Arab Emirates,Makes me feel special/important,0.03
+Global,Importance vs. satisfaction,UAE,United Arab Emirates,Is a brand for someone like me,0.01
+Global,Importance vs. satisfaction,UAE,United Arab Emirates,Is a brand I would want to be seen using,0.14
+Global,Importance vs. satisfaction,UAE,United Arab Emirates,Is a brand I trust,-0.01
+Global,Importance vs. satisfaction,KSA,Saudi Arabia,Helps me relax and recharge,-0.060000000
+Global,Importance vs. satisfaction,KSA,Saudi Arabia,Makes me feel “in the know”,0.020000000
+Global,Importance vs. satisfaction,KSA,Saudi Arabia,Makes me feel special/important,0.04
+Global,Importance vs. satisfaction,KSA,Saudi Arabia,Is a brand for someone like me,0.02
+Global,Importance vs. satisfaction,KSA,Saudi Arabia,Is a brand I would want to be seen using,0.13
+Global,Importance vs. satisfaction,KSA,Saudi Arabia,Is a brand I trust,-0.03
+Global,Importance vs. satisfaction,DE,Germany,Helps me relax and recharge,-0.03
+Global,Importance vs. satisfaction,DE,Germany,Makes me feel “in the know”,0.05
+Global,Importance vs. satisfaction,DE,Germany,Makes me feel special/important,0.04
+Global,Importance vs. satisfaction,DE,Germany,Is a brand for someone like me,-0.01
+Global,Importance vs. satisfaction,DE,Germany,Is a brand I would want to be seen using,0.09
+Global,Importance vs. satisfaction,DE,Germany,Is a brand I trust,-0.03
+Global,Importance vs. satisfaction,JP,Japan,Helps me relax and recharge,-0.1
+Global,Importance vs. satisfaction,JP,Japan,Makes me feel “in the know”,0.06
+Global,Importance vs. satisfaction,JP,Japan,Makes me feel special/important,0.04
+Global,Importance vs. satisfaction,JP,Japan,Is a brand for someone like me,-0.010000000
+Global,Importance vs. satisfaction,JP,Japan,Is a brand I would want to be seen using,0.09
+Global,Importance vs. satisfaction,JP,Japan,Is a brand I trust,-0.02
+Global,Importance vs. satisfaction,IN,India,Helps me relax and recharge,-0.15
+Global,Importance vs. satisfaction,IN,India,Makes me feel “in the know”,-0.06
+Global,Importance vs. satisfaction,IN,India,Makes me feel special/important,-0.08
+Global,Importance vs. satisfaction,IN,India,Is a brand for someone like me,-0.050000000
+Global,Importance vs. satisfaction,IN,India,Is a brand I would want to be seen using,-0.04
+Global,Importance vs. satisfaction,IN,India,Is a brand I trust,-0.14
+Zillennials,General hotel feature importance,US,United States,Helps me relax and recharge,0.63
+Zillennials,General hotel feature importance,US,United States,Makes me feel “in the know”,0.34
+Zillennials,General hotel feature importance,US,United States,Makes me feel special/important,0.41
+Zillennials,General hotel feature importance,US,United States,Is a brand for someone like me,0.49
+Zillennials,General hotel feature importance,US,United States,Is a brand I would want to be seen using,0.4
+Zillennials,General hotel feature importance,US,United States,Is a brand I trust,0.59
+Zillennials,General hotel feature importance,UK,United Kingdom,Helps me relax and recharge,0.55
+Zillennials,General hotel feature importance,UK,United Kingdom,Makes me feel “in the know”,0.25
+Zillennials,General hotel feature importance,UK,United Kingdom,Makes me feel special/important,0.31
+Zillennials,General hotel feature importance,UK,United Kingdom,Is a brand for someone like me,0.38
+Zillennials,General hotel feature importance,UK,United Kingdom,Is a brand I would want to be seen using,0.26
+Zillennials,General hotel feature importance,UK,United Kingdom,Is a brand I trust,0.53
+Zillennials,General hotel feature importance,CN,China,Helps me relax and recharge,0.32
+Zillennials,General hotel feature importance,CN,China,Makes me feel “in the know”,0.32
+Zillennials,General hotel feature importance,CN,China,Makes me feel special/important,0.34
+Zillennials,General hotel feature importance,CN,China,Is a brand for someone like me,0.33
+Zillennials,General hotel feature importance,CN,China,Is a brand I would want to be seen using,0.28
+Zillennials,General hotel feature importance,CN,China,Is a brand I trust,0.42
+Zillennials,General hotel feature importance,UAE,United Arab Emirates,Helps me relax and recharge,0.55
+Zillennials,General hotel feature importance,UAE,United Arab Emirates,Makes me feel “in the know”,0.41
+Zillennials,General hotel feature importance,UAE,United Arab Emirates,Makes me feel special/important,0.45
+Zillennials,General hotel feature importance,UAE,United Arab Emirates,Is a brand for someone like me,0.49
+Zillennials,General hotel feature importance,UAE,United Arab Emirates,Is a brand I would want to be seen using,0.35
+Zillennials,General hotel feature importance,UAE,United Arab Emirates,Is a brand I trust,0.56
+Zillennials,General hotel feature importance,KSA,Saudi Arabia,Helps me relax and recharge,0.67
+Zillennials,General hotel feature importance,KSA,Saudi Arabia,Makes me feel “in the know”,0.55
+Zillennials,General hotel feature importance,KSA,Saudi Arabia,Makes me feel special/important,0.58
+Zillennials,General hotel feature importance,KSA,Saudi Arabia,Is a brand for someone like me,0.61
+Zillennials,General hotel feature importance,KSA,Saudi Arabia,Is a brand I would want to be seen using,0.47
+Zillennials,General hotel feature importance,KSA,Saudi Arabia,Is a brand I trust,0.66
+Zillennials,General hotel feature importance,DE,Germany,Helps me relax and recharge,0.44
+Zillennials,General hotel feature importance,DE,Germany,Makes me feel “in the know”,0.27
+Zillennials,General hotel feature importance,DE,Germany,Makes me feel special/important,0.34
+Zillennials,General hotel feature importance,DE,Germany,Is a brand for someone like me,0.32
+Zillennials,General hotel feature importance,DE,Germany,Is a brand I would want to be seen using,0.26
+Zillennials,General hotel feature importance,DE,Germany,Is a brand I trust,0.38
+Zillennials,General hotel feature importance,JP,Japan,Helps me relax and recharge,0.5
+Zillennials,General hotel feature importance,JP,Japan,Makes me feel “in the know”,0.15
+Zillennials,General hotel feature importance,JP,Japan,Makes me feel special/important,0.27
+Zillennials,General hotel feature importance,JP,Japan,Is a brand for someone like me,0.27
+Zillennials,General hotel feature importance,JP,Japan,Is a brand I would want to be seen using,0.2
+Zillennials,General hotel feature importance,JP,Japan,Is a brand I trust,0.4
+Zillennials,General hotel feature importance,IN,India,Helps me relax and recharge,0.69
+Zillennials,General hotel feature importance,IN,India,Makes me feel “in the know”,0.51
+Zillennials,General hotel feature importance,IN,India,Makes me feel special/important,0.58
+Zillennials,General hotel feature importance,IN,India,Is a brand for someone like me,0.56
+Zillennials,General hotel feature importance,IN,India,Is a brand I would want to be seen using,0.52
+Zillennials,General hotel feature importance,IN,India,Is a brand I trust,0.7
+Zillennials,Hilton satisfaction,US,United States,Helps me relax and recharge,0.57
+Zillennials,Hilton satisfaction,US,United States,Makes me feel “in the know”,0.44
+Zillennials,Hilton satisfaction,US,United States,Makes me feel special/important,0.5
+Zillennials,Hilton satisfaction,US,United States,Is a brand for someone like me,0.52
+Zillennials,Hilton satisfaction,US,United States,Is a brand I would want to be seen using,0.55
+Zillennials,Hilton satisfaction,US,United States,Is a brand I trust,0.57
+Zillennials,Hilton satisfaction,UK,United Kingdom,Helps me relax and recharge,0.43
+Zillennials,Hilton satisfaction,UK,United Kingdom,Makes me feel “in the know”,0.34
+Zillennials,Hilton satisfaction,UK,United Kingdom,Makes me feel special/important,0.4
+Zillennials,Hilton satisfaction,UK,United Kingdom,Is a brand for someone like me,0.37
+Zillennials,Hilton satisfaction,UK,United Kingdom,Is a brand I would want to be seen using,0.43
+Zillennials,Hilton satisfaction,UK,United Kingdom,Is a brand I trust,0.44
+Zillennials,Hilton satisfaction,CN,China,Helps me relax and recharge,0.37
+Zillennials,Hilton satisfaction,CN,China,Makes me feel “in the know”,0.36
+Zillennials,Hilton satisfaction,CN,China,Makes me feel special/important,0.36
+Zillennials,Hilton satisfaction,CN,China,Is a brand for someone like me,0.37
+Zillennials,Hilton satisfaction,CN,China,Is a brand I would want to be seen using,0.38
+Zillennials,Hilton satisfaction,CN,China,Is a brand I trust,0.41
+Zillennials,Hilton satisfaction,UAE,United Arab Emirates,Helps me relax and recharge,0.51
+Zillennials,Hilton satisfaction,UAE,United Arab Emirates,Makes me feel “in the know”,0.46
+Zillennials,Hilton satisfaction,UAE,United Arab Emirates,Makes me feel special/important,0.49
+Zillennials,Hilton satisfaction,UAE,United Arab Emirates,Is a brand for someone like me,0.5
+Zillennials,Hilton satisfaction,UAE,United Arab Emirates,Is a brand I would want to be seen using,0.48
+Zillennials,Hilton satisfaction,UAE,United Arab Emirates,Is a brand I trust,0.54
+Zillennials,Hilton satisfaction,KSA,Saudi Arabia,Helps me relax and recharge,0.61
+Zillennials,Hilton satisfaction,KSA,Saudi Arabia,Makes me feel “in the know”,0.57
+Zillennials,Hilton satisfaction,KSA,Saudi Arabia,Makes me feel special/important,0.62
+Zillennials,Hilton satisfaction,KSA,Saudi Arabia,Is a brand for someone like me,0.63
+Zillennials,Hilton satisfaction,KSA,Saudi Arabia,Is a brand I would want to be seen using,0.59
+Zillennials,Hilton satisfaction,KSA,Saudi Arabia,Is a brand I trust,0.64
+Zillennials,Hilton satisfaction,DE,Germany,Helps me relax and recharge,0.41
+Zillennials,Hilton satisfaction,DE,Germany,Makes me feel “in the know”,0.33
+Zillennials,Hilton satisfaction,DE,Germany,Makes me feel special/important,0.37
+Zillennials,Hilton satisfaction,DE,Germany,Is a brand for someone like me,0.33
+Zillennials,Hilton satisfaction,DE,Germany,Is a brand I would want to be seen using,0.36
+Zillennials,Hilton satisfaction,DE,Germany,Is a brand I trust,0.36
+Zillennials,Hilton satisfaction,JP,Japan,Helps me relax and recharge,0.42
+Zillennials,Hilton satisfaction,JP,Japan,Makes me feel “in the know”,0.22
+Zillennials,Hilton satisfaction,JP,Japan,Makes me feel special/important,0.32
+Zillennials,Hilton satisfaction,JP,Japan,Is a brand for someone like me,0.27
+Zillennials,Hilton satisfaction,JP,Japan,Is a brand I would want to be seen using,0.31
+Zillennials,Hilton satisfaction,JP,Japan,Is a brand I trust,0.41
+Zillennials,Hilton satisfaction,IN,India,Helps me relax and recharge,0.53
+Zillennials,Hilton satisfaction,IN,India,Makes me feel “in the know”,0.46
+Zillennials,Hilton satisfaction,IN,India,Makes me feel special/important,0.51
+Zillennials,Hilton satisfaction,IN,India,Is a brand for someone like me,0.53
+Zillennials,Hilton satisfaction,IN,India,Is a brand I would want to be seen using,0.5
+Zillennials,Hilton satisfaction,IN,India,Is a brand I trust,0.55
+Zillennials,Importance vs. satisfaction,US,United States,Helps me relax and recharge,-0.060000000
+Zillennials,Importance vs. satisfaction,US,United States,Makes me feel “in the know”,0.1
+Zillennials,Importance vs. satisfaction,US,United States,Makes me feel special/important,0.09
+Zillennials,Importance vs. satisfaction,US,United States,Is a brand for someone like me,0.03
+Zillennials,Importance vs. satisfaction,US,United States,Is a brand I would want to be seen using,0.15
+Zillennials,Importance vs. satisfaction,US,United States,Is a brand I trust,-0.02
+Zillennials,Importance vs. satisfaction,UK,United Kingdom,Helps me relax and recharge,-0.12
+Zillennials,Importance vs. satisfaction,UK,United Kingdom,Makes me feel “in the know”,0.09
+Zillennials,Importance vs. satisfaction,UK,United Kingdom,Makes me feel special/important,0.09
+Zillennials,Importance vs. satisfaction,UK,United Kingdom,Is a brand for someone like me,-0.01
+Zillennials,Importance vs. satisfaction,UK,United Kingdom,Is a brand I would want to be seen using,0.17
+Zillennials,Importance vs. satisfaction,UK,United Kingdom,Is a brand I trust,-0.09
+Zillennials,Importance vs. satisfaction,CN,China,Helps me relax and recharge,0.05
+Zillennials,Importance vs. satisfaction,CN,China,Makes me feel “in the know”,0.04
+Zillennials,Importance vs. satisfaction,CN,China,Makes me feel special/important,0.02
+Zillennials,Importance vs. satisfaction,CN,China,Is a brand for someone like me,0.04
+Zillennials,Importance vs. satisfaction,CN,China,Is a brand I would want to be seen using,0.1
+Zillennials,Importance vs. satisfaction,CN,China,Is a brand I trust,-0.01
+Zillennials,Importance vs. satisfaction,UAE,United Arab Emirates,Helps me relax and recharge,-0.04
+Zillennials,Importance vs. satisfaction,UAE,United Arab Emirates,Makes me feel “in the know”,0.05
+Zillennials,Importance vs. satisfaction,UAE,United Arab Emirates,Makes me feel special/important,0.04
+Zillennials,Importance vs. satisfaction,UAE,United Arab Emirates,Is a brand for someone like me,0.01
+Zillennials,Importance vs. satisfaction,UAE,United Arab Emirates,Is a brand I would want to be seen using,0.13
+Zillennials,Importance vs. satisfaction,UAE,United Arab Emirates,Is a brand I trust,-0.02
+Zillennials,Importance vs. satisfaction,KSA,Saudi Arabia,Helps me relax and recharge,-0.060000000
+Zillennials,Importance vs. satisfaction,KSA,Saudi Arabia,Makes me feel “in the know”,0.020000000
+Zillennials,Importance vs. satisfaction,KSA,Saudi Arabia,Makes me feel special/important,0.04
+Zillennials,Importance vs. satisfaction,KSA,Saudi Arabia,Is a brand for someone like me,0.02
+Zillennials,Importance vs. satisfaction,KSA,Saudi Arabia,Is a brand I would want to be seen using,0.12
+Zillennials,Importance vs. satisfaction,KSA,Saudi Arabia,Is a brand I trust,-0.02
+Zillennials,Importance vs. satisfaction,DE,Germany,Helps me relax and recharge,-0.03
+Zillennials,Importance vs. satisfaction,DE,Germany,Makes me feel “in the know”,0.06
+Zillennials,Importance vs. satisfaction,DE,Germany,Makes me feel special/important,0.03
+Zillennials,Importance vs. satisfaction,DE,Germany,Is a brand for someone like me,0.01
+Zillennials,Importance vs. satisfaction,DE,Germany,Is a brand I would want to be seen using,0.1
+Zillennials,Importance vs. satisfaction,DE,Germany,Is a brand I trust,-0.02
+Zillennials,Importance vs. satisfaction,JP,Japan,Helps me relax and recharge,-0.08
+Zillennials,Importance vs. satisfaction,JP,Japan,Makes me feel “in the know”,0.07
+Zillennials,Importance vs. satisfaction,JP,Japan,Makes me feel special/important,0.05
+Zillennials,Importance vs. satisfaction,JP,Japan,Is a brand for someone like me,0
+Zillennials,Importance vs. satisfaction,JP,Japan,Is a brand I would want to be seen using,0.11
+Zillennials,Importance vs. satisfaction,JP,Japan,Is a brand I trust,0.010000000
+Zillennials,Importance vs. satisfaction,IN,India,Helps me relax and recharge,-0.16
+Zillennials,Importance vs. satisfaction,IN,India,Makes me feel “in the know”,-0.05
+Zillennials,Importance vs. satisfaction,IN,India,Makes me feel special/important,-0.07
+Zillennials,Importance vs. satisfaction,IN,India,Is a brand for someone like me,-0.03
+Zillennials,Importance vs. satisfaction,IN,India,Is a brand I would want to be seen using,-0.02
+Zillennials,Importance vs. satisfaction,IN,India,Is a brand I trust,-0.15
