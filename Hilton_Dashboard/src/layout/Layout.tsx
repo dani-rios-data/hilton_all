@@ -1,6 +1,4 @@
 import React from 'react'
-import Header from './Header'
-import { TabType } from '../types/data'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -20,10 +18,11 @@ const Layout: React.FC<LayoutProps> = ({ children, setActivePage, activePage }) 
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header 
-        activeTab={activePage as TabType} 
-        setActiveTab={(tab) => setActivePage(tab)}
-      />
+      <header className="bg-blue-800 text-white p-4">
+        <div className="container mx-auto">
+          <h1 className="text-2xl font-bold">Hilton Dashboard</h1>
+        </div>
+      </header>
       
       <nav className="bg-blue-700 text-white">
         <div className="container mx-auto px-4">
