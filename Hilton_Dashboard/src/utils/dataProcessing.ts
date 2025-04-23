@@ -32,16 +32,23 @@ import {
   
   // Process awareness data for trend charts
   export const processAwarenessTrend = (data: AwarenessData[]) => {
-    const quarters = [...new Set(data.map(item => item.quarter))].sort();
+    const quarters = [...new Set(data.map(item => item.quarter || 'N/A'))].sort();
     const hotels = [...new Set(data.map(item => item.brand))];
     
     return quarters.map(quarter => {
       const result: { name: string; [key: string]: string | number } = { name: quarter };
       
       hotels.forEach(hotel => {
-        const hotelData = data.filter(item => item.brand === hotel && item.quarter === quarter);
-        const avgValue = hotelData.reduce((sum, item) => sum + parseFloat(item.value.toString()), 0) / hotelData.length;
-        result[hotel.toLowerCase()] = Math.round(avgValue);
+        if (hotel) {
+          const hotelData = data.filter(item => 
+            item.brand === hotel && 
+            (item.quarter || 'N/A') === quarter
+          );
+          const avgValue = hotelData.length > 0 
+            ? hotelData.reduce((sum, item) => sum + parseFloat((item.value || 0).toString()), 0) / hotelData.length
+            : 0;
+          result[hotel.toLowerCase()] = Math.round(avgValue);
+        }
       });
       
       return result;
