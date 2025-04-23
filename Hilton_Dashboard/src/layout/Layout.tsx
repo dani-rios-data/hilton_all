@@ -1,4 +1,5 @@
 import React from 'react'
+import { colors } from '../utils/colors'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -18,11 +19,50 @@ const Layout: React.FC<LayoutProps> = ({ children, setActivePage, activePage }) 
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-blue-800 text-white p-4">
-        <div className="container mx-auto">
-          <h1 className="text-2xl font-bold">Hilton Dashboard</h1>
+      <div className="flex items-center justify-between px-8 py-5" style={{ borderBottom: '1px solid #E5E7EB' }}>
+        <div className="flex items-center">
+          <div style={{ 
+            border: `1px solid ${colors.hiltonBlue}`, 
+            padding: '8px 12px'
+          }}>
+            <div className="font-bold" style={{ 
+              color: colors.hiltonBlue, 
+              fontSize: '20px',
+              lineHeight: '1',
+              letterSpacing: '0.5px'
+            }}>
+              Hilton
+            </div>
+            <div style={{ 
+              color: colors.hiltonBlue, 
+              fontSize: '10px',
+              letterSpacing: '1px',
+              marginTop: '2px'
+            }}>
+              FOR THE STAY
+            </div>
+          </div>
         </div>
-      </header>
+        
+        <div className="flex flex-col items-center">
+          <h1 style={{ 
+            fontFamily: 'Georgia, serif', 
+            fontSize: '36px', 
+            color: colors.black,
+            fontWeight: 'normal',
+            letterSpacing: '0.5px',
+            margin: 0,
+            lineHeight: '1.2'
+          }}>
+            Global Insights Dashboard
+          </h1>
+        </div>
+        
+        <div className="flex">
+          {/* Empty div for balance - keeps the header centered */}
+          <div style={{ width: '120px' }}></div>
+        </div>
+      </div>
       
       <nav className="bg-blue-700 text-white">
         <div className="container mx-auto px-4">
