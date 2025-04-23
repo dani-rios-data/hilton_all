@@ -17,11 +17,11 @@ import {
   
   // Process consideration data by hotel
   export const processConsiderationByHotel = (data: ConsiderationData[]) => {
-    const hotels = [...new Set(data.map(item => item.Hotel))];
+    const hotels = [...new Set(data.map(item => item.brand))];
     
     return hotels.map(hotel => {
-      const hotelData = data.filter(item => item.Hotel === hotel);
-      const avgValue = hotelData.reduce((sum, item) => sum + item.Value, 0) / hotelData.length;
+      const hotelData = data.filter(item => item.brand === hotel);
+      const avgValue = hotelData.reduce((sum, item) => sum + item.value, 0) / hotelData.length;
       
       return {
         name: hotel,
@@ -32,15 +32,15 @@ import {
   
   // Process awareness data for trend charts
   export const processAwarenessTrend = (data: AwarenessData[]) => {
-    const quarters = [...new Set(data.map(item => item.Quarter))].sort();
-    const hotels = [...new Set(data.map(item => item.Hotel))];
+    const quarters = [...new Set(data.map(item => item.quarter))].sort();
+    const hotels = [...new Set(data.map(item => item.brand))];
     
     return quarters.map(quarter => {
       const result: { name: string; [key: string]: string | number } = { name: quarter };
       
       hotels.forEach(hotel => {
-        const hotelData = data.filter(item => item.Hotel === hotel && item.Quarter === quarter);
-        const avgValue = hotelData.reduce((sum, item) => sum + parseFloat(item.Value), 0) / hotelData.length;
+        const hotelData = data.filter(item => item.brand === hotel && item.quarter === quarter);
+        const avgValue = hotelData.reduce((sum, item) => sum + parseFloat(item.value.toString()), 0) / hotelData.length;
         result[hotel.toLowerCase()] = Math.round(avgValue);
       });
       

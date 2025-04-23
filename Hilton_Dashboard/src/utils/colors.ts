@@ -10,6 +10,10 @@ export const colors = {
   teal: '#06937E',
   blueTint: '#6E9FB5',
   turquoiseTint: '#8FB3A7',
+  white: '#FFFFFF',
+  black: '#000000',
+  hiltonOffWhite: '#F5F5F5',
+  tealTint: '#A7D7D0',
   
   // Marcas de Hilton
   hilton: '#0057B8',

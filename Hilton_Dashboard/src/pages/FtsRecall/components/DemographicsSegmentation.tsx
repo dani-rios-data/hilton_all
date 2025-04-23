@@ -45,7 +45,6 @@ const DemographicsSegmentation: React.FC<DemographicsSegmentationProps> = ({ dat
             <PolarAngleAxis 
               dataKey="name" 
               tick={{ fill: '#6B7280', fontSize: 11 }}
-              cy="50%"
             />
             <PolarRadiusAxis 
               angle={30} 

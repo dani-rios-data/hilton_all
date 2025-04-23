@@ -57,7 +57,6 @@ const ValuePriceRatio: React.FC<ValuePriceRatioProps> = ({ data }) => {
               type="monotone" 
               dataKey="hilton" 
               stroke={colors.hiltonBlue} 
-              strokeWidth={3}
               {...lineConfig}
             />
             <Line 
@@ -66,7 +65,7 @@ const ValuePriceRatio: React.FC<ValuePriceRatioProps> = ({ data }) => {
               dataKey="marriott" 
               stroke={colors.turquoise} 
               strokeDasharray="5 5"
-              {...lineConfig}
+              activeDot={{ r: 8 }}
             />
           </LineChart>
         </ResponsiveContainer>
