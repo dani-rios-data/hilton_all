@@ -49,13 +49,24 @@ const QuarterlyTrend: React.FC<QuarterlyTrendProps> = ({ data }) => {
       }));
   }, [data]);
 
+  // Calcular el valor máximo dinámicamente para el eje Y
+  const maxYDomain = useMemo(() => {
+    if (!trendData || trendData.length === 0) return 60;
+
+    const maxValue = Math.max(
+      ...trendData.map(item => Math.max(
+        Number(item.ftsAssociation) || 0,
+        Number(item.commRecall) || 0
+      ))
+    );
+
+    return Math.ceil(maxValue) + 5; // Añadir 5 puntos al máximo
+  }, [trendData]);
+
   return (
     <div className="p-4 bg-white rounded shadow-sm">
-      <h2 className="mb-3 text-xl" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-        "For The Stay" Brand Association Analysis
-      </h2>
       <h3 className="mb-6 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-        Quarterly trend of FTS association and communication recall
+        Total Audience: Quarterly trend of FTS association and communication recall
       </h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
@@ -66,19 +77,18 @@ const QuarterlyTrend: React.FC<QuarterlyTrendProps> = ({ data }) => {
             <XAxis 
               dataKey="name" 
               tick={{ fill: '#6B7280', fontSize: 11 }}
-              axisLine={{ stroke: '#E5E7EB' }}
+              padding={{ left: 20, right: 20 }}
             />
             <YAxis 
               tick={{ fill: '#6B7280', fontSize: 11 }}
-              axisLine={{ stroke: '#E5E7EB' }}
-              domain={[0, 60]}
-              tickCount={7}
+              domain={[0, maxYDomain]}
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend 
               verticalAlign="bottom" 
               height={36}
               iconType="circle"
+              wrapperStyle={{ fontSize: '11px' }}
             />
             <defs>
               <linearGradient id="colorAssoc" x1="0" y1="0" x2="0" y2="1">
