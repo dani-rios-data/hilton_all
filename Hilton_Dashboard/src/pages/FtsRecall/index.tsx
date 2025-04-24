@@ -5,6 +5,7 @@ import QuarterlyTrend from './components/QuarterlyTrend';
 import AudienceSegment from './components/AudienceSegment';
 import DemographicsSegmentation from './components/DemographicsSegmentation';
 import AudienceGroupTrend from './components/AudienceGroupTrend';
+import AudienceGroupCommRecallTrend from './components/AudienceGroupCommRecallTrend';
 import BrandAssociationData from './components/BrandAssociationData';
 
 const FtsRecall: React.FC = () => {
@@ -24,18 +25,19 @@ const FtsRecall: React.FC = () => {
         "For The Stay" Brand Association Analysis
       </h2>
       
+      <div className="grid grid-cols-2 gap-6">
+        <DemographicsSegmentation data={ftsRecall} />
+        <AudienceSegment data={ftsRecall} />
+      </div>
+      
       <div className="grid grid-cols-1 gap-6">
         <QuarterlyTrend data={ftsRecall} />
       </div>
       
-      <div className="grid grid-cols-2 gap-6">
-        <AudienceSegment data={ftsRecall} />
-        <DemographicsSegmentation data={ftsRecall} />
-      </div>
-      
+      <AudienceGroupCommRecallTrend data={ftsRecall} />
       <AudienceGroupTrend data={ftsRecall} />
       
-      <BrandAssociationData />
+      <BrandAssociationData data={ftsRecall} />
     </div>
   );
 };

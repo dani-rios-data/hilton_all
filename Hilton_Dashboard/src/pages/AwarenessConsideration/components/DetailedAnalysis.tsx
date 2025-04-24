@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import { colors } from '../../../utils/colors';
 import { AwarenessData, ConsiderationData } from '../../../types/data';
 
@@ -8,106 +8,127 @@ interface DetailedAnalysisProps {
 }
 
 const DetailedAnalysis: React.FC<DetailedAnalysisProps> = ({ awarenessData, considerationData }) => {
-  const [metrics, setMetrics] = useState({
-    hiltonAwareness: 0,
-    hiltonConsideration: 0,
-    gap: 0,
-    conversionHilton: 0,
-    conversionMarriott: 0,
-    difference: 0,
-    highestAudienceValue: 0,
-    highestAudienceName: '',
-  });
+  const metrics = useMemo(() => {
+    if (!awarenessData || !considerationData || awarenessData.length === 0 || considerationData.length === 0) {
+      return {
+        hiltonAwareness: 0,
+        hiltonConsideration: 0,
+        marriottAwareness: 0,
+        marriottConsideration: 0,
+        highestAudienceValue: 0,
+        highestAudienceName: '',
+        percentageIncrease: 0
+      };
+    }
 
-  useEffect(() => {
-    if (awarenessData && awarenessData.length > 0 && considerationData && considerationData.length > 0) {
-        const latestQuarter = 'Q4 2023';
-        const awarenessFiltered = awarenessData.filter(item => 
-          item.quarter === latestQuarter && 
-          item.category === 'Unaided Awareness'
-        );
-        const considerationFiltered = considerationData.filter(item => 
-          item.quarter === latestQuarter
-        );
-        
-        const hiltonAwareness = awarenessFiltered
-          .filter(item => item.brand === 'Hilton')
-          .map(item => typeof item.value === 'string' ? parseFloat(String(item.value).replace('%', '')) : item.value || 0);
-        
-        const hiltonConsideration = considerationFiltered
-          .filter(item => item.brand === 'Hilton')
-          .map(item => item.value);
-        
-        const avgHiltonAwareness = hiltonAwareness.length > 0 
-          ? Math.round(hiltonAwareness.reduce((sum, val) => sum + val, 0) / hiltonAwareness.length) 
-          : 0;
-        
-        const avgHiltonConsideration = hiltonConsideration.length > 0 
-          ? Math.round(hiltonConsideration.reduce((sum, val) => sum + val, 0) / hiltonConsideration.length) 
-          : 0;
-        
-        const marriottAwareness = awarenessFiltered
-          .filter(item => item.brand === 'Marriott')
-          .map(item => typeof item.value === 'string' ? parseFloat(String(item.value).replace('%', '')) : item.value || 0);
-        
-        const marriottConsideration = considerationFiltered
-          .filter(item => item.brand === 'Marriott')
-          .map(item => item.value);
-        
-        const avgMarriottAwareness = marriottAwareness.length > 0 
-          ? Math.round(marriottAwareness.reduce((sum, val) => sum + val, 0) / marriottAwareness.length) 
-          : 0;
-        
-        const avgMarriottConsideration = marriottConsideration.length > 0 
-          ? Math.round(marriottConsideration.reduce((sum, val) => sum + val, 0) / marriottConsideration.length) 
-          : 0;
-        
-        const conversionHilton = avgHiltonAwareness > 0 ? (avgHiltonConsideration / avgHiltonAwareness) * 100 : 0;
-        const conversionMarriott = avgMarriottAwareness > 0 ? (avgMarriottConsideration / avgMarriottAwareness) * 100 : 0;
-        
-        const audienceAwareness = awarenessFiltered.filter(item => 
-          item.brand === 'Hilton' && item.audience
-        );
-        
-        let highestAudienceValue = 0;
-        let highestAudienceName = '';
-        
-        audienceAwareness.forEach(item => {
-          let numValue = typeof item.value === 'string' ? parseFloat(String(item.value).replace('%', '')) : item.value || 0;
-          if (numValue > highestAudienceValue && item.audience) {
-            highestAudienceValue = numValue;
-            highestAudienceName = item.audience;
-          }
-        });
-        
-        setMetrics({
-          hiltonAwareness: avgHiltonAwareness,
-          hiltonConsideration: avgHiltonConsideration,
-          gap: avgHiltonConsideration - avgHiltonAwareness,
-          conversionHilton: parseFloat(conversionHilton.toFixed(1)),
-          conversionMarriott: parseFloat(conversionMarriott.toFixed(1)),
-          difference: parseFloat((conversionMarriott - conversionHilton).toFixed(1)),
-          highestAudienceValue: Math.round(highestAudienceValue),
-          highestAudienceName: highestAudienceName || '',
-        });
+    const latestQuarter = 'Q4 2023';
+
+    // Calcular awareness promedio de Hilton
+    const hiltonAwarenessData = awarenessData.filter(
+      item => item.quarter === latestQuarter && 
+      item.brand === 'Hilton' &&
+      item.category === 'Unaided Awareness'
+    );
+    
+    const hiltonAwareness = hiltonAwarenessData.length > 0
+      ? Math.round(hiltonAwarenessData.reduce((sum, item) => {
+          const value = typeof item.value === 'string' 
+            ? parseFloat(item.value.replace('%', '')) 
+            : item.value;
+          return sum + value;
+        }, 0) / hiltonAwarenessData.length)
+      : 0;
+
+    // Calcular consideration promedio de Hilton
+    const hiltonConsiderationData = considerationData.filter(
+      item => item.quarter === latestQuarter && 
+      item.brand === 'Hilton' &&
+      item.category === 'Consideration'
+    );
+    
+    const hiltonConsideration = hiltonConsiderationData.length > 0
+      ? Math.round(hiltonConsiderationData.reduce((sum, item) => sum + item.value, 0) / hiltonConsiderationData.length)
+      : 0;
+
+    // Calcular awareness promedio de Marriott
+    const marriottAwarenessData = awarenessData.filter(
+      item => item.quarter === latestQuarter && 
+      item.brand === 'Marriott' &&
+      item.category === 'Unaided Awareness'
+    );
+    
+    const marriottAwareness = marriottAwarenessData.length > 0
+      ? Math.round(marriottAwarenessData.reduce((sum, item) => {
+          const value = typeof item.value === 'string' 
+            ? parseFloat(item.value.replace('%', '')) 
+            : item.value;
+          return sum + value;
+        }, 0) / marriottAwarenessData.length)
+      : 0;
+
+    // Calcular consideration promedio de Marriott
+    const marriottConsiderationData = considerationData.filter(
+      item => item.quarter === latestQuarter && 
+      item.brand === 'Marriott' &&
+      item.category === 'Consideration'
+    );
+    
+    const marriottConsideration = marriottConsiderationData.length > 0
+      ? Math.round(marriottConsiderationData.reduce((sum, item) => sum + item.value, 0) / marriottConsiderationData.length)
+      : 0;
+
+    // Encontrar el segmento de audiencia con el mayor awareness para Hilton
+    const audienceAwarenessData = awarenessData.filter(
+      item => item.quarter === latestQuarter && 
+      item.brand === 'Hilton' &&
+      item.category === 'Unaided Awareness' &&
+      item.audience
+    );
+
+    let highestAudienceValue = 0;
+    let highestAudienceName = '';
+
+    audienceAwarenessData.forEach(item => {
+      const value = typeof item.value === 'string' 
+        ? parseFloat(item.value.replace('%', '')) 
+        : item.value;
+      if (value > highestAudienceValue && item.audience) {
+        highestAudienceValue = value;
+        highestAudienceName = item.audience;
       }
+    });
+
+    // Calcular el porcentaje de incremento entre awareness y consideration
+    const percentageIncrease = hiltonAwareness > 0 
+      ? Math.round((hiltonConsideration / hiltonAwareness - 1) * 100)
+      : 0;
+
+    return {
+      hiltonAwareness,
+      hiltonConsideration,
+      marriottAwareness,
+      marriottConsideration,
+      highestAudienceValue,
+      highestAudienceName,
+      percentageIncrease
+    };
   }, [awarenessData, considerationData]);
 
   return (
     <div className="p-4 bg-blue-50 rounded-lg shadow-sm border-l-4" style={{ borderColor: colors.hiltonBlue }}>
-        <h4 className="text-lg mb-2 font-medium" style={{ color: colors.hiltonBlue, fontFamily: 'Georgia, serif' }}>Detailed Analysis</h4>
-        <p className="text-gray-700 leading-relaxed mb-2">
-          <span className="font-medium">Brand performance metrics (Q4 2023):</span> Hilton achieves {metrics.hiltonAwareness}% average unaided awareness and {metrics.hiltonConsideration}% consideration across all audience segments. This represents a {Math.abs(metrics.gap)}-point positive difference, with consideration exceeding awareness by {metrics.hiltonAwareness > 0 ? ((metrics.hiltonConsideration/metrics.hiltonAwareness)*100-100).toFixed(0) : 'N/A'}%.
-        </p>
-        <p className="text-gray-700 leading-relaxed mb-2">
-          <span className="font-medium">Competitive comparison:</span> For Q4 2023, Hilton shows {metrics.hiltonAwareness}% unaided awareness and {metrics.hiltonConsideration}% consideration, while Marriott shows {metrics.conversionMarriott > 0 ? (metrics.hiltonConsideration / (metrics.conversionMarriott / 100)).toFixed(0) : 'N/A' /* Estimación de Marriott Awareness */}% and {metrics.conversionMarriott > 0 ? (metrics.hiltonConsideration / (metrics.conversionMarriott / 100) * (metrics.conversionMarriott / 100)).toFixed(0) : 'N/A' /* Estimación de Marriott Consideration */}% respectively.
-        </p>
-        {metrics.highestAudienceName && (
-          <p className="text-gray-700 leading-relaxed">
-            <span className="font-medium">Demographic insights:</span> Among all audience segments, <span className="font-medium">{metrics.highestAudienceName}</span> demonstrates the highest unaided awareness of Hilton at {metrics.highestAudienceValue}%, based on Q4 2023 survey data.
-          </p>
-        )}
-      </div>
+      <h4 className="text-lg mb-2 font-medium" style={{ color: colors.hiltonBlue, fontFamily: 'Georgia, serif' }}>
+        Detailed Analysis
+      </h4>
+      <p className="text-gray-700 leading-relaxed mb-2">
+        Brand performance metrics (Q4 2023): Hilton achieves {metrics.hiltonAwareness}% average unaided awareness and {metrics.hiltonConsideration}% consideration across all audience segments. This represents a {Math.abs(metrics.hiltonConsideration - metrics.hiltonAwareness)}-point positive difference, with consideration exceeding awareness by {metrics.percentageIncrease}%.
+      </p>
+      <p className="text-gray-700 leading-relaxed mb-2">
+        Competitive comparison: For Q4 2023, Hilton shows {metrics.hiltonAwareness}% unaided awareness and {metrics.hiltonConsideration}% consideration, while Marriott shows {metrics.marriottAwareness}% and {metrics.marriottConsideration}% respectively.
+      </p>
+      <p className="text-gray-700 leading-relaxed">
+        Demographic insights: Among all audience segments, {metrics.highestAudienceName} demonstrates the highest unaided awareness of Hilton at {metrics.highestAudienceValue}%, based on Q4 2023 survey data.
+      </p>
+    </div>
   );
 };
 

@@ -106,7 +106,7 @@ const AwarenessTrend: React.FC<AwarenessTrendProps> = ({ data }) => {
     return (
       <div className="p-4 bg-white rounded shadow-sm">
         <h3 className="mb-3 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-          Awareness Trend
+          Unaided Brand Awareness Over Time
         </h3>
         <div className="h-64 flex items-center justify-center text-gray-500">
           No data available
@@ -118,7 +118,7 @@ const AwarenessTrend: React.FC<AwarenessTrendProps> = ({ data }) => {
   return (
     <div className="p-4 bg-white rounded shadow-sm">
       <h3 className="mb-3 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-        Awareness Trend
+        Unaided Brand Awareness Over Time
       </h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
@@ -143,9 +143,9 @@ const AwarenessTrend: React.FC<AwarenessTrendProps> = ({ data }) => {
             <Tooltip content={<CustomTooltip />} />
             <Legend 
               verticalAlign="bottom" 
-              height={36} 
+              height={24}
               iconType="circle"
-              wrapperStyle={{ paddingTop: '10px' }}
+              wrapperStyle={{ paddingTop: '8px', fontSize: '11px' }}
             />
             {trendData.length > 0 && trendData[0].hilton !== undefined && (
               <Line 

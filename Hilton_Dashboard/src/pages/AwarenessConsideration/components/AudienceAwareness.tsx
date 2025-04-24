@@ -79,7 +79,7 @@ const AudienceAwareness: React.FC<AudienceAwarenessProps> = ({ data }) => {
     return (
       <div className="p-4 bg-white rounded shadow-sm">
         <h3 className="mb-3 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-          Awareness by Generation
+          Unaided Brand Awareness by Generation (Q4 2023)
         </h3>
         <div className="h-64 flex items-center justify-center text-gray-500">
           No data available
@@ -91,7 +91,7 @@ const AudienceAwareness: React.FC<AudienceAwarenessProps> = ({ data }) => {
   return (
     <div className="p-4 bg-white rounded shadow-sm">
       <h3 className="mb-3 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-        Awareness by Generation
+        Unaided Brand Awareness by Generation (Q4 2023)
       </h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
@@ -115,9 +115,9 @@ const AudienceAwareness: React.FC<AudienceAwarenessProps> = ({ data }) => {
             <Tooltip content={<CustomTooltip />} />
             <Legend 
               verticalAlign="bottom" 
-              height={36}
+              height={24}
               iconType="circle"
-              wrapperStyle={{ paddingTop: '10px' }}
+              wrapperStyle={{ paddingTop: '8px', fontSize: '11px' }}
             />
             <Bar 
               name="Hilton" 

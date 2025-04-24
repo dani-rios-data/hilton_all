@@ -57,3 +57,19 @@ export interface ChartDataPoint {
 }
 
 export type TabType = 'overview' | 'brandSpend' | 'proofOfPoint' | 'priceWorth' | 'ftsRecall' | 'awareness';
+
+export interface BaseData {
+  quarter: string;
+  brand: string;
+  audience?: string;
+  category: 'Unaided Awareness' | 'Consideration';
+  value: string | number;
+}
+
+export interface AwarenessData extends BaseData {
+  category: 'Unaided Awareness';
+}
+
+export interface ConsiderationData extends BaseData {
+  category: 'Consideration';
+}

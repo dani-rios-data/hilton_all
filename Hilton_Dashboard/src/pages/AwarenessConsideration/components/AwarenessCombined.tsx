@@ -101,7 +101,7 @@ const AwarenessCombined: React.FC<AwarenessCombinedProps> = ({ data, considerati
     return (
       <div className="p-4 bg-white rounded shadow-sm">
         <h3 className="mb-3 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-          Brand Performance Overview
+          Brand Awareness & Consideration Comparison (Q4 2023)
         </h3>
         <div className="h-64 flex items-center justify-center text-gray-500">
           No data available
@@ -113,7 +113,7 @@ const AwarenessCombined: React.FC<AwarenessCombinedProps> = ({ data, considerati
   return (
     <div className="p-4 bg-white rounded shadow-sm">
       <h3 className="mb-3 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-        Brand Performance Overview
+        Brand Awareness & Consideration Comparison (Q4 2023)
       </h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
@@ -137,14 +137,14 @@ const AwarenessCombined: React.FC<AwarenessCombinedProps> = ({ data, considerati
             <Tooltip content={<CustomTooltip />} />
             <Legend 
               verticalAlign="bottom" 
-              height={36}
+              height={24}
               iconType="circle"
-              wrapperStyle={{ paddingTop: '10px' }}
+              wrapperStyle={{ paddingTop: '8px', fontSize: '11px' }}
             />
             <Bar 
               name="Awareness" 
               dataKey="awareness" 
-              fill={colors.hiltonBlue}
+              fill={colors.turquoise}
               barSize={30} 
               radius={[4, 4, 0, 0]}
               animationDuration={1500}
@@ -152,7 +152,7 @@ const AwarenessCombined: React.FC<AwarenessCombinedProps> = ({ data, considerati
             <Bar 
               name="Consideration" 
               dataKey="consideration" 
-              fill={colors.turquoise}
+              fill={colors.teal}
               barSize={30} 
               radius={[4, 4, 0, 0]}
               animationDuration={1500}

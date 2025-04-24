@@ -14,16 +14,16 @@ import { colors } from '../../../utils/colors';
 import CustomTooltip from '../../../components/ui/CustomTooltip';
 import { lineConfig } from '../../../components/ui/ChartComponents';
 
-interface AudienceGroupTrendProps {
+// Renombrar interfaz y props
+interface AudienceGroupCommRecallTrendProps {
   data: FtsRecallData[];
 }
 
-// Interfaz para los datos procesados (asegurando valores numéricos para las audiencias)
-interface ProcessedTrendData {
+// Interfaz para los datos procesados 
+interface ProcessedRecallTrendData {
   quarter: string;
-  Millennials?: number; // Hacer opcionales y explícitamente number
+  Millennials?: number; 
   "Gen X"?: number;
-  // Añadir otras audiencias si se necesitan
 }
 
 // Helper para ordenar trimestres
@@ -35,83 +35,58 @@ const sortQuarters = (a: string, b: string) => {
   return quarterOrder[qA as keyof typeof quarterOrder] - quarterOrder[qB as keyof typeof quarterOrder];
 };
 
-const AudienceGroupTrend: React.FC<AudienceGroupTrendProps> = ({ data }) => {
-  const trendData = useMemo((): ProcessedTrendData[] => {
+// Renombrar componente
+const AudienceGroupCommRecallTrend: React.FC<AudienceGroupCommRecallTrendProps> = ({ data }) => {
+  const trendData = useMemo((): ProcessedRecallTrendData[] => {
     if (!data || data.length === 0) return [];
 
     const audienceGroups = ['Millennials', 'Gen X']; 
     const filteredData = data.filter(item => audienceGroups.includes(item.audience));
 
-    // Agrupar por trimestre, asegurando que los valores sean números
     const groupedByQuarter: { [quarter: string]: { [audience: string]: number } } = {};
     filteredData.forEach(item => {
       if (!groupedByQuarter[item.quarter]) {
         groupedByQuarter[item.quarter] = {};
       }
-      // Convertir a número, con 0 como fallback si no es válido
-      const valueAsNumber = Number(item.value);
-      groupedByQuarter[item.quarter][item.audience] = isNaN(valueAsNumber) ? 0 : valueAsNumber;
+      // Usar communicationRecall
+      const recallValue = Number(item.communicationRecall);
+      groupedByQuarter[item.quarter][item.audience] = isNaN(recallValue) ? 0 : recallValue; 
     });
 
-    // Mapear a la interfaz ProcessedTrendData
-    const result: ProcessedTrendData[] = Object.entries(groupedByQuarter).map(([quarter, values]) => ({
+    const result: ProcessedRecallTrendData[] = Object.entries(groupedByQuarter).map(([quarter, values]) => ({
       quarter: quarter,
-      Millennials: values.Millennials, // Mapear explícitamente
+      Millennials: values.Millennials,
       "Gen X": values["Gen X"]
     }));
 
     return result.sort((a, b) => sortQuarters(a.quarter, b.quarter));
 
   }, [data]);
-
-  // Eliminar datos estáticos
-  /*
-  const millennialsData = [
-    ...
-  ];
-  const genXData = [
-    ...
-  ];
-  */
   
-  // Calcular dominio Y dinámico
   const yDomain = useMemo(() => {
-      if (!trendData || trendData.length === 0) return [0, 70]; // Dominio por defecto
-      
+      if (!trendData || trendData.length === 0) return [0, 70];
       let min = Infinity;
       let max = 0;
-
       trendData.forEach(item => {
-          // Revisar Millennials si existe
-          if (item.Millennials !== undefined) {
-            if (item.Millennials < min) min = item.Millennials;
-            if (item.Millennials > max) max = item.Millennials;
-          }
-          // Revisar Gen X si existe
-          if (item["Gen X"] !== undefined) {
-            if (item["Gen X"] < min) min = item["Gen X"];
-            if (item["Gen X"] > max) max = item["Gen X"];
-          }
-          // Añadir otros grupos aquí si se incluyen más adelante
+          if (item.Millennials !== undefined && item.Millennials < min) min = item.Millennials;
+          if (item.Millennials !== undefined && item.Millennials > max) max = item.Millennials;
+          if (item["Gen X"] !== undefined && item["Gen X"] < min) min = item["Gen X"];
+          if (item["Gen X"] !== undefined && item["Gen X"] > max) max = item["Gen X"];
       });
-      
-      // Si no se encontraron datos válidos, min seguirá siendo Infinity
       if (min === Infinity) min = 0;
-
-      const minValue = Math.max(0, Math.floor(min) - 5); // -5 del mínimo, sin bajar de 0
-      const maxValue = Math.ceil(max / 10) * 10 + 5; // +5 sobre el máximo redondeado
-
-      return [minValue, maxValue]; // Devolver [min, max]
+      const minValue = Math.max(0, Math.floor(min) - 5);
+      const maxValue = Math.ceil(max / 10) * 10 + 5;
+      return [minValue, maxValue]; 
   }, [trendData]);
 
   if (trendData.length === 0) {
       return (
         <div className="p-4 bg-white rounded shadow-sm">
             <h3 className="mb-3 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-                Quarterly trend by audience group
+                Communication Recall: Quarterly trend by audience group {/* Título actualizado */}
             </h3>
             <div className="h-64 flex items-center justify-center text-gray-500">
-                No trend data available for Millennials or Gen X.
+                No recall trend data available for Millennials or Gen X.
             </div>
         </div>
       );
@@ -120,41 +95,40 @@ const AudienceGroupTrend: React.FC<AudienceGroupTrendProps> = ({ data }) => {
   return (
     <div className="p-4 bg-white rounded shadow-sm">
       <h3 className="mb-3 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-        FTS Association: Quarterly trend by audience group
+        Communication Recall: Quarterly trend by audience group {/* Título actualizado */}
       </h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
-            data={trendData} // Usar datos procesados
+            data={trendData}
             margin={{ top: 5, right: 30, left: 20, bottom: 25 }}
           >
             {/* <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" /> */}
             <XAxis 
               dataKey="quarter" 
               type="category" 
-              // allowDuplicatedCategory={false} // No necesario con datos agrupados
-              tick={{ fill: '#6B7280', fontSize: 11 }} // Reducir fuente
+              tick={{ fill: '#6B7280', fontSize: 11 }}
               padding={{ left: 20, right: 20 }}
             />
             <YAxis 
-              domain={yDomain} // Usar dominio dinámico
-              tick={{ fill: '#6B7280', fontSize: 11 }} // Reducir fuente
+              domain={yDomain}
+              tick={{ fill: '#6B7280', fontSize: 11 }}
             />
             <Tooltip content={<CustomTooltip />} />
-            <Legend verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: '11px' }} iconType="circle" /> {/* Ajustar leyenda */}
+            <Legend verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: '11px' }} iconType="circle" />
             
-            {/* Millennials data */}
+            {/* Millennials Recall */}
             <Line 
-              name="Millennials"
+              name="Millennials" // Mantener nombre para leyenda compartida visualmente
               type="monotone" 
               dataKey="Millennials" 
               stroke={colors.hiltonBlue} 
               {...lineConfig}
             />
             
-            {/* Gen X data */}
+            {/* Gen X Recall */}
             <Line 
-              name="Gen X"
+              name="Gen X" // Mantener nombre para leyenda compartida visualmente
               type="monotone" 
               dataKey="Gen X" 
               stroke={colors.turquoise} 
@@ -167,4 +141,5 @@ const AudienceGroupTrend: React.FC<AudienceGroupTrendProps> = ({ data }) => {
   );
 };
 
-export default AudienceGroupTrend;
+// Renombrar export
+export default AudienceGroupCommRecallTrend; 

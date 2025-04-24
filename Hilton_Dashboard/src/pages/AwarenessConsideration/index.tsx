@@ -7,6 +7,8 @@ import ConsiderationTrend from './components/ConsiderationTrend';
 import AudienceAwareness from './components/AudienceAwareness';
 import DataSummary from './components/DataSummary';
 import DetailedAnalysis from './components/DetailedAnalysis';
+import HiltonMetricsTrend from './components/HiltonMetricsTrend';
+import MarriottMetricsTrend from './components/MarriottMetricsTrend';
 
 const AwarenessConsideration: React.FC = () => {
   const { awareness, consideration, isLoading, error } = useCSVData();
@@ -25,9 +27,16 @@ const AwarenessConsideration: React.FC = () => {
         Awareness & Consideration Analysis
       </h2>
       
+      <DataSummary awarenessData={awareness} considerationData={consideration} />
+
       <div className="grid grid-cols-2 gap-6">
         <AwarenessCombined data={awareness} considerationData={consideration} />
         <AudienceAwareness data={awareness} />
+      </div>
+
+      <div className="grid grid-cols-2 gap-6">
+        <HiltonMetricsTrend awarenessData={awareness} considerationData={consideration} />
+        <MarriottMetricsTrend awarenessData={awareness} considerationData={consideration} />
       </div>
       
       <div className="grid grid-cols-2 gap-6">
@@ -35,7 +44,6 @@ const AwarenessConsideration: React.FC = () => {
         <ConsiderationTrend data={consideration} />
       </div>
       
-      <DataSummary awarenessData={awareness} considerationData={consideration} />
       <DetailedAnalysis awarenessData={awareness} considerationData={consideration} />
     </div>
   );
