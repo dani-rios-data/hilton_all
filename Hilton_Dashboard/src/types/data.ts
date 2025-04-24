@@ -25,18 +25,17 @@ export interface AwarenessData {
 }
 
 export interface FtsRecallData {
-  brand: string;
   value: number;
-  attribute?: string;
-  audience?: string;
-  year?: number;
-  category?: string;
+  audience: string;
+  quarter: string;
+  communicationRecall: number;
 }
 
 export interface PriceWorthData {
   brand: string;
   value: number;
-  generation?: string;
+  generation: string;
+  quarter: string;
   category?: string;
   metric?: string;
 }

@@ -11,14 +11,12 @@ import {
 import { AwarenessData } from '../../../types/data';
 import { colors } from '../../../utils/colors';
 import CustomTooltip from '../../../components/ui/CustomTooltip';
-import { lineConfig } from '../../../components/ui/ChartComponents';
 
 interface AwarenessTrendProps {
   data: AwarenessData[];
 }
 
 const AwarenessTrend: React.FC<AwarenessTrendProps> = ({ data }) => {
-  // Procesar datos reales del CSV
   const trendData = useMemo(() => {
     if (!data || data.length === 0) {
       console.log("No awareness data available");
@@ -31,38 +29,46 @@ const AwarenessTrend: React.FC<AwarenessTrendProps> = ({ data }) => {
     // Obtener todos los trimestres únicos
     const quarters = [...new Set(awarenessData.map(item => item.quarter))].sort();
     
-    // Obtener todas las marcas únicas
-    const brands = [...new Set(awarenessData.map(item => item.brand))];
-    
     // Crear datos para cada trimestre
     return quarters.map(quarter => {
-      // Datos de base para este trimestre
+      // Datos base para este trimestre
       const quarterData: Record<string, any> = { name: quarter };
       
-      // Para cada marca, calcular el valor promedio en ese trimestre
-      brands.forEach(brand => {
-        const brandData = awarenessData.filter(
-          item => item.quarter === quarter && item.brand === brand
+      // Procesar datos de Hilton
+      const hiltonData = awarenessData.filter(
+        item => item.quarter === quarter && item.brand === 'Hilton'
+      );
+      
+      if (hiltonData.length > 0) {
+        const hiltonValues = hiltonData.map(item => {
+          if (typeof item.value === 'string') {
+            return parseFloat(String(item.value).replace('%', ''));
+          }
+          return item.value;
+        });
+        const hiltonAvg = Math.round(
+          hiltonValues.reduce((sum, val) => sum + val, 0) / hiltonValues.length
         );
-        
-        if (brandData.length > 0) {
-          // Calcular promedio
-          const brandValues = brandData.map(item => {
-            // Convertir valor de string (si viene con %) a número
-            if (typeof item.value === 'string') {
-              const str = item.value as string;
-              return parseFloat(str.replace('%', ''));
-            }
-            return item.value;
-          });
-          
-          const total = brandValues.reduce((sum, val) => sum + val, 0);
-          const average = Math.round(total / brandValues.length);
-          
-          // Guardar en formato clave-valor donde la clave es el nombre de la marca en minúsculas
-          quarterData[brand.toLowerCase()] = average;
-        }
-      });
+        quarterData.hilton = hiltonAvg;
+      }
+      
+      // Procesar datos de Marriott
+      const marriottData = awarenessData.filter(
+        item => item.quarter === quarter && item.brand === 'Marriott'
+      );
+      
+      if (marriottData.length > 0) {
+        const marriottValues = marriottData.map(item => {
+          if (typeof item.value === 'string') {
+            return parseFloat(String(item.value).replace('%', ''));
+          }
+          return item.value;
+        });
+        const marriottAvg = Math.round(
+          marriottValues.reduce((sum, val) => sum + val, 0) / marriottValues.length
+        );
+        quarterData.marriott = marriottAvg;
+      }
       
       return quarterData;
     });
@@ -70,15 +76,12 @@ const AwarenessTrend: React.FC<AwarenessTrendProps> = ({ data }) => {
 
   // Calcular el valor máximo para ajustar el dominio del eje Y
   const maxValue = useMemo(() => {
-    if (trendData.length === 0) return 0;
+    if (!trendData || trendData.length === 0) return 100;
     
     let max = 0;
     trendData.forEach(item => {
-      Object.keys(item).forEach(key => {
-        if (key !== 'name' && item[key] > max) {
-          max = item[key];
-        }
-      });
+      if (item.hilton > max) max = item.hilton;
+      if (item.marriott > max) max = item.marriott;
     });
     
     return Math.ceil(max) + 5; // Añadir 5 puntos al máximo
@@ -88,7 +91,7 @@ const AwarenessTrend: React.FC<AwarenessTrendProps> = ({ data }) => {
     return (
       <div className="p-4 bg-white rounded shadow-sm">
         <h3 className="mb-3 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-          Awareness trend
+          Awareness Trend
         </h3>
         <div className="h-64 flex items-center justify-center text-gray-500">
           No data available
@@ -96,13 +99,11 @@ const AwarenessTrend: React.FC<AwarenessTrendProps> = ({ data }) => {
       </div>
     );
   }
-  
-  console.log("Processed awareness trend data:", trendData);
 
   return (
     <div className="p-4 bg-white rounded shadow-sm">
       <h3 className="mb-3 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-        Awareness trend
+        Awareness Trend
       </h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
@@ -131,33 +132,26 @@ const AwarenessTrend: React.FC<AwarenessTrendProps> = ({ data }) => {
               iconType="circle"
               wrapperStyle={{ paddingTop: '10px' }}
             />
-            {trendData.length > 0 && trendData[0].hilton !== undefined && (
-              <Line 
-                name="Hilton" 
-                type="monotone" 
-                dataKey="hilton" 
-                stroke={colors.competitors.hilton} 
-                {...lineConfig}
-              />
-            )}
-            {trendData.length > 0 && trendData[0].marriott !== undefined && (
-              <Line 
-                name="Marriott" 
-                type="monotone" 
-                dataKey="marriott" 
-                stroke={colors.competitors.marriott} 
-                {...lineConfig}
-              />
-            )}
-            {trendData.length > 0 && trendData[0].hyatt !== undefined && (
-              <Line 
-                name="Hyatt" 
-                type="monotone" 
-                dataKey="hyatt" 
-                stroke={colors.competitors.hyatt} 
-                {...lineConfig}
-              />
-            )}
+            <Line 
+              name="Hilton" 
+              type="monotone" 
+              dataKey="hilton" 
+              stroke={colors.hiltonBlue}
+              strokeWidth={3}
+              dot={{ r: 5, fill: colors.hiltonBlue }}
+              activeDot={{ r: 7 }}
+              animationDuration={1500}
+            />
+            <Line 
+              name="Marriott" 
+              type="monotone" 
+              dataKey="marriott" 
+              stroke={colors.turquoise}
+              strokeWidth={3}
+              dot={{ r: 5, fill: colors.turquoise }}
+              activeDot={{ r: 7 }}
+              animationDuration={1500}
+            />
           </LineChart>
         </ResponsiveContainer>
       </div>

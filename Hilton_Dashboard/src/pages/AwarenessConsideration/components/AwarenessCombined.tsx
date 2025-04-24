@@ -18,7 +18,6 @@ interface AwarenessCombinedProps {
 }
 
 const AwarenessCombined: React.FC<AwarenessCombinedProps> = ({ data, considerationData = [] }) => {
-  // Procesar datos reales del CSV
   const combinedData = useMemo(() => {
     if (!data || data.length === 0) {
       console.log("No awareness data available for combined chart");
@@ -32,10 +31,9 @@ const AwarenessCombined: React.FC<AwarenessCombinedProps> = ({ data, considerati
       item.category === 'Unaided Awareness'
     );
     
-    // Obtener todas las marcas únicas
-    const brands = [...new Set(awarenessData.map(item => item.brand))];
+    // Procesar datos para Hilton y Marriott
+    const brands = ['Hilton', 'Marriott'];
     
-    // Procesar datos para cada marca
     return brands.map(brand => {
       // Calcular el promedio de awareness para esta marca
       const brandAwareness = awarenessData.filter(item => item.brand === brand);
@@ -43,16 +41,15 @@ const AwarenessCombined: React.FC<AwarenessCombinedProps> = ({ data, considerati
       
       if (brandAwareness.length > 0) {
         const awarenessValues = brandAwareness.map(item => {
-          // Convertir valor de string (si viene con %) a número
           if (typeof item.value === 'string') {
-            const str = item.value as string;
-            return parseFloat(str.replace('%', ''));
+            return parseFloat(String(item.value).replace('%', ''));
           }
           return item.value;
         });
         
-        const total = awarenessValues.reduce((sum, val) => sum + val, 0);
-        awarenessValue = Math.round(total / awarenessValues.length);
+        awarenessValue = Math.round(
+          awarenessValues.reduce((sum, val) => sum + val, 0) / awarenessValues.length
+        );
       }
       
       // Calcular el promedio de consideration para esta marca
@@ -66,8 +63,16 @@ const AwarenessCombined: React.FC<AwarenessCombinedProps> = ({ data, considerati
         );
         
         if (brandConsideration.length > 0) {
-          const total = brandConsideration.reduce((sum, item) => sum + item.value, 0);
-          considerationValue = Math.round(total / brandConsideration.length);
+          const considerationValues = brandConsideration.map(item => {
+            if (typeof item.value === 'string') {
+              return parseFloat(String(item.value).replace('%', ''));
+            }
+            return item.value;
+          });
+          
+          considerationValue = Math.round(
+            considerationValues.reduce((sum, val) => sum + val, 0) / considerationValues.length
+          );
         }
       }
       
@@ -76,12 +81,12 @@ const AwarenessCombined: React.FC<AwarenessCombinedProps> = ({ data, considerati
         awareness: awarenessValue,
         consideration: considerationValue
       };
-    }).sort((a, b) => b.awareness - a.awareness); // Ordenar por awareness descendente
+    });
   }, [data, considerationData]);
 
   // Calcular el valor máximo para ajustar el dominio del eje Y
   const maxValue = useMemo(() => {
-    if (combinedData.length === 0) return 100;
+    if (!combinedData || combinedData.length === 0) return 100;
     
     let max = 0;
     combinedData.forEach(item => {
@@ -96,7 +101,7 @@ const AwarenessCombined: React.FC<AwarenessCombinedProps> = ({ data, considerati
     return (
       <div className="p-4 bg-white rounded shadow-sm">
         <h3 className="mb-3 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-          Awareness vs Consideration
+          Brand Performance Overview
         </h3>
         <div className="h-64 flex items-center justify-center text-gray-500">
           No data available
@@ -104,13 +109,11 @@ const AwarenessCombined: React.FC<AwarenessCombinedProps> = ({ data, considerati
       </div>
     );
   }
-  
-  console.log("Processed combined awareness/consideration data:", combinedData);
 
   return (
     <div className="p-4 bg-white rounded shadow-sm">
       <h3 className="mb-3 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-        Awareness vs Consideration
+        Brand Performance Overview
       </h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
@@ -141,16 +144,16 @@ const AwarenessCombined: React.FC<AwarenessCombinedProps> = ({ data, considerati
             <Bar 
               name="Awareness" 
               dataKey="awareness" 
-              barSize={30} 
               fill={colors.hiltonBlue}
+              barSize={30} 
               radius={[4, 4, 0, 0]}
               animationDuration={1500}
             />
             <Bar 
               name="Consideration" 
               dataKey="consideration" 
-              barSize={30} 
               fill={colors.turquoise}
+              barSize={30} 
               radius={[4, 4, 0, 0]}
               animationDuration={1500}
             />

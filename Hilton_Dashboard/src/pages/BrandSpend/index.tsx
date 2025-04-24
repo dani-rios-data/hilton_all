@@ -23,15 +23,15 @@ const BrandSpend: React.FC = () => {
   return (
     <div className="space-y-8">
       <h2 className="mb-4 text-xl font-serif" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-        Marketing Spend Analysis
+        Key Metrics
       </h2>
+
+      <KeyStatistics data={processedData} />
       
-      <div className="grid grid-cols-3 gap-6">
+      <div className="space-y-6">
         <MarketingBudget data={processedData} />
         <SpendDistribution data={processedData.slice(0, 7)} />
       </div>
-      
-      <KeyStatistics data={processedData} />
       
       <DataSummary />
     </div>

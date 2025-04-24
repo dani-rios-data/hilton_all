@@ -97,13 +97,19 @@ export const useCSVData = () => {
         console.log("Processed consideration data:", processedConsideration);
 
         // Process awareness data to match the expected format
-        const processedAwareness = (awarenessData as any[]).map(item => ({
-          brand: item.Hotel,
-          value: item.Value,
-          audience: item.Audience,
-          quarter: item.Quarter,
-          category: item.Feature
-        }));
+        const processedAwareness = (awarenessData as any[]).map(item => {
+          let value = item.Value;
+          if (typeof value === 'string') {
+            value = parseFloat(value);
+          }
+          return {
+            brand: item.Hotel,
+            value: isNaN(value) ? 0 : value,
+            audience: item.Audience,
+            quarter: item.Quarter,
+            category: item.Feature
+          };
+        });
 
         // Process brand spend data - specifically handle the column name issue
         const processedBrandSpend = (brandSpendData as any[]).map(item => {
@@ -121,28 +127,45 @@ export const useCSVData = () => {
         });
 
         // Process FTS recall data
-        const processedFtsRecall = (ftsRecallData as any[]).map(item => ({
-          brand: item.Brand || item.brand || "Hilton",
-          value: item["FTS Association (%)"] || item.value || 0,
-          audience: item.Audience || item.audience,
-          attribute: item.Attribute || item.attribute
-        }));
+        const processedFtsRecall = (ftsRecallData as any[]).map(item => {
+          let ftsValue = item["FTS Association (%)"];
+          if (typeof ftsValue === 'string') {
+            ftsValue = parseFloat(ftsValue.replace('%', ''));
+          }
+          return {
+            value: isNaN(ftsValue) ? 0 : ftsValue,
+            audience: item.Audience,
+            quarter: item.Quarter,
+            communicationRecall: parseFloat((item["Communication Recall (%)"] || "0").replace('%', ''))
+          };
+        });
 
         // Process price worth data
-        const processedPriceWorth = (priceWorthData as any[]).map(item => ({
-          brand: item.Brand || item.brand || "Hilton",
-          value: item.Value || item.value || 0,
-          generation: item.Audience || item.Generation || item.generation
-        }));
+        const processedPriceWorth = (priceWorthData as any[]).map(item => {
+          let value = parseFloat((item["Hilton Worth"] || "0").replace('%', ''));
+          return {
+            brand: "Hilton",
+            value: isNaN(value) ? 0 : value,
+            generation: item.Audience,
+            quarter: item.Trimestre,
+            category: "Worth"
+          };
+        });
 
         // Process proof of point data
-        const processedProofOfPoint = (proofOfPointData as any[]).map(item => ({
-          brand: item.Brand || item.brand || "Hilton",
-          value: item.Percentage || item.Value || item.value || 0,
-          audience: item.Audience || item.audience,
-          country: item["Country Name"] || item.Country || item.country,
-          category: item.Category || item.category
-        }));
+        const processedProofOfPoint = (proofOfPointData as any[]).map(item => {
+          let value = item.Percentage || item.Value || item.value || 0;
+          if (typeof value === 'string') {
+            value = parseFloat(value);
+          }
+          return {
+            brand: item.Brand || item.brand || "Hilton",
+            value: isNaN(value) ? 0 : value,
+            audience: item.Audience || item.audience,
+            country: item["Country Name"] || item.Country || item.country,
+            category: item.Category || item.category
+          };
+        });
 
         setData({
           brandSpend: processedBrandSpend as BrandSpendData[],

@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { 
   AreaChart, 
   Area, 
   XAxis, 
   YAxis, 
-  CartesianGrid, 
   Tooltip, 
   Legend, 
   ResponsiveContainer 
@@ -19,19 +18,43 @@ interface QuarterlyTrendProps {
 }
 
 const QuarterlyTrend: React.FC<QuarterlyTrendProps> = ({ data }) => {
-  // Process data - in a real implementation, this would process the FtsRecallData
-  // For demo purposes, using static data matching the mockup
-  const trendData = [
-    { name: 'Q1 2023', ftsAssociation: 32, commRecall: 28 },
-    { name: 'Q2 2023', ftsAssociation: 38, commRecall: 35 },
-    { name: 'Q3 2023', ftsAssociation: 45, commRecall: 42 },
-    { name: 'Q4 2023', ftsAssociation: 51, commRecall: 48 },
-    { name: 'Q1 2024', ftsAssociation: 58, commRecall: 53 }
-  ];
+  const trendData = useMemo(() => {
+    if (!data || data.length === 0) return [];
+
+    // Filter only Total audience data
+    const totalData = data.filter(item => item.audience === 'Total');
+
+    // Custom sort function for quarters
+    const quarterOrder = {
+      'Q1': 1,
+      'Q2': 2,
+      'Q3': 3,
+      'Q4': 4
+    };
+
+    return totalData
+      .sort((a, b) => {
+        const [yearA, qA] = a.quarter.split(' ');
+        const [yearB, qB] = b.quarter.split(' ');
+        
+        if (yearA !== yearB) {
+          return parseInt(yearA) - parseInt(yearB);
+        }
+        return quarterOrder[qA as keyof typeof quarterOrder] - quarterOrder[qB as keyof typeof quarterOrder];
+      })
+      .map(item => ({
+        name: item.quarter,
+        ftsAssociation: item.value,
+        commRecall: item.communicationRecall
+      }));
+  }, [data]);
 
   return (
     <div className="p-4 bg-white rounded shadow-sm">
-      <h3 className="mb-3 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
+      <h2 className="mb-3 text-xl" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
+        "For The Stay" Brand Association Analysis
+      </h2>
+      <h3 className="mb-6 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
         Quarterly trend of FTS association and communication recall
       </h3>
       <div className="h-64">
@@ -40,18 +63,23 @@ const QuarterlyTrend: React.FC<QuarterlyTrendProps> = ({ data }) => {
             data={trendData}
             margin={{ top: 10, right: 30, left: 20, bottom: 25 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
             <XAxis 
               dataKey="name" 
-              tick={{ fill: '#6B7280' }}
-              axisLine={false}
+              tick={{ fill: '#6B7280', fontSize: 11 }}
+              axisLine={{ stroke: '#E5E7EB' }}
             />
             <YAxis 
-              tick={{ fill: '#6B7280' }}
-              axisLine={false}
+              tick={{ fill: '#6B7280', fontSize: 11 }}
+              axisLine={{ stroke: '#E5E7EB' }}
+              domain={[0, 60]}
+              tickCount={7}
             />
             <Tooltip content={<CustomTooltip />} />
-            <Legend verticalAlign="bottom" height={36} />
+            <Legend 
+              verticalAlign="bottom" 
+              height={36}
+              iconType="circle"
+            />
             <defs>
               <linearGradient id="colorAssoc" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={colors.hiltonBlue} stopOpacity={0.8}/>
