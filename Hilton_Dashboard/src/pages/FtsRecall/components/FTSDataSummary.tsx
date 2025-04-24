@@ -76,77 +76,83 @@ const FTSDataSummary: React.FC<FTSDataSummaryProps> = ({ data }) => {
   }
 
   return (
-    <div className="p-4 bg-white rounded shadow-sm">
-      <h3 className="text-lg mb-4" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
+    <div className="p-5 bg-white rounded shadow-sm">
+      <h3 className="text-lg mb-5" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue, borderBottom: `2px solid ${colors.hiltonBlue}`, paddingBottom: '8px' }}>
         FTS Association & Communication Recall Summary
       </h3>
       
-      <div className="space-y-4">
-        <div className="border-b border-gray-200 pb-2">
-          <h4 className="font-semibold text-gray-700 mb-2">Key Metrics ({summaryData.latestQuarter})</h4>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-sm text-gray-600">Total FTS Association:</p>
-              <p className="text-xl font-semibold" style={{ color: colors.hiltonBlue }}>{summaryData.totalFts}%</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600">Total Communication Recall:</p>
-              <p className="text-xl font-semibold" style={{ color: colors.turquoise }}>{summaryData.totalRecall}%</p>
-            </div>
-          </div>
-        </div>
-        
-        <div className="pb-2">
-          <h4 className="font-semibold text-gray-700 mb-2">Audience Breakdown</h4>
-          <div className="grid grid-cols-3 gap-2 text-sm">
-            <div className="bg-gray-50 p-2 rounded">
-              <p className="font-medium">Millennials</p>
-              <div className="flex justify-between">
-                <span className="text-gray-600">FTS:</span>
-                <span className="font-semibold">{summaryData.millennialsFts}%</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Recall:</span>
-                <span className="font-semibold">{summaryData.millennialsRecall}%</span>
-              </div>
-            </div>
-            <div className="bg-gray-50 p-2 rounded">
-              <p className="font-medium">Gen X</p>
-              <div className="flex justify-between">
-                <span className="text-gray-600">FTS:</span>
-                <span className="font-semibold">{summaryData.genXFts}%</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Recall:</span>
-                <span className="font-semibold">{summaryData.genXRecall}%</span>
-              </div>
-            </div>
-            <div className="bg-gray-50 p-2 rounded">
-              <p className="font-medium">Boomers</p>
-              <div className="flex justify-between">
-                <span className="text-gray-600">FTS:</span>
-                <span className="font-semibold">{summaryData.boomersFts}%</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Recall:</span>
-                <span className="font-semibold">{summaryData.boomersRecall}%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        
+      <div className="space-y-5">
         <div>
-          <p className="text-sm text-gray-600">
-            <span className="font-semibold">Quarterly Growth:</span> 
-            <span className={summaryData.quarterlyGrowth >= 0 ? "text-green-600" : "text-red-600"}>
-              {" "}{summaryData.quarterlyGrowth > 0 ? "+" : ""}{summaryData.quarterlyGrowth.toFixed(1)}%
-            </span> 
-            {summaryData.previousQuarter && ` from ${summaryData.previousQuarter}`}
-          </p>
-          <p className="text-sm text-gray-600 mt-2">
-            Millennials show the highest FTS Association at {summaryData.millennialsFts}% and Communication Recall at {summaryData.millennialsRecall}%, 
-            while Boomers have the lowest metrics with {summaryData.boomersFts}% and {summaryData.boomersRecall}% respectively.
-          </p>
+          <h4 className="font-semibold text-gray-700 mb-3" style={{ borderLeft: `3px solid ${colors.hiltonBlue}`, paddingLeft: '8px' }}>
+            Key Metrics ({summaryData.latestQuarter})
+          </h4>
+          <div className="grid grid-cols-2 gap-6 px-3">
+            <div>
+              <p className="text-sm text-gray-600 mb-1">Total FTS Association:</p>
+              <p className="text-3xl font-bold" style={{ color: colors.hiltonBlue }}>{summaryData.totalFts}%</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-600 mb-1">Total Communication Recall:</p>
+              <p className="text-3xl font-bold" style={{ color: colors.turquoise }}>{summaryData.totalRecall}%</p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="border-t border-gray-100 pt-4">
+          <h4 className="font-semibold text-gray-700 mb-3" style={{ borderLeft: `3px solid ${colors.turquoise}`, paddingLeft: '8px' }}>
+            Audience Breakdown
+          </h4>
+          <div className="grid grid-cols-3 gap-3 px-1">
+            <div className="bg-gray-50 p-3 rounded-lg border-l-4" style={{ borderLeftColor: colors.hiltonBlue }}>
+              <p className="font-medium text-gray-800 mb-2">Millennials</p>
+              <div className="flex justify-between items-center mb-1">
+                <span className="text-gray-600">FTS:</span>
+                <span className="font-bold text-lg">{summaryData.millennialsFts}%</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-600">Recall:</span>
+                <span className="font-bold text-lg">{summaryData.millennialsRecall}%</span>
+              </div>
+            </div>
+            <div className="bg-gray-50 p-3 rounded-lg border-l-4" style={{ borderLeftColor: colors.turquoise }}>
+              <p className="font-medium text-gray-800 mb-2">Gen X</p>
+              <div className="flex justify-between items-center mb-1">
+                <span className="text-gray-600">FTS:</span>
+                <span className="font-bold text-lg">{summaryData.genXFts}%</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-600">Recall:</span>
+                <span className="font-bold text-lg">{summaryData.genXRecall}%</span>
+              </div>
+            </div>
+            <div className="bg-gray-50 p-3 rounded-lg border-l-4" style={{ borderLeftColor: '#60A5FA' }}>
+              <p className="font-medium text-gray-800 mb-2">Boomers</p>
+              <div className="flex justify-between items-center mb-1">
+                <span className="text-gray-600">FTS:</span>
+                <span className="font-bold text-lg">{summaryData.boomersFts}%</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-600">Recall:</span>
+                <span className="font-bold text-lg">{summaryData.boomersRecall}%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="border-t border-gray-100 pt-4">
+          <div className="px-3">
+            <p className="text-sm font-medium text-gray-700 mb-2">
+              <span className="font-semibold">Quarterly Growth:</span> 
+              <span className={`px-2 py-1 ml-2 rounded-full ${summaryData.quarterlyGrowth >= 0 ? "bg-green-50 text-green-600" : "bg-red-50 text-red-600"}`}>
+                {summaryData.quarterlyGrowth > 0 ? "+" : ""}{summaryData.quarterlyGrowth.toFixed(1)}%
+                {summaryData.previousQuarter && ` from ${summaryData.previousQuarter}`}
+              </span>
+            </p>
+            <p className="text-sm text-gray-600 mt-3 bg-gray-50 p-3 rounded">
+              <span className="font-medium">Key insight:</span> Millennials show the highest FTS Association at {summaryData.millennialsFts}% and Communication Recall at {summaryData.millennialsRecall}%, 
+              while Boomers have the lowest metrics with {summaryData.boomersFts}% and {summaryData.boomersRecall}% respectively.
+            </p>
+          </div>
         </div>
       </div>
     </div>
