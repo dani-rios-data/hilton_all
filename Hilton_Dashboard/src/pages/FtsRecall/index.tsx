@@ -3,10 +3,10 @@ import { useCSVData } from '../../hooks/useCSVData';
 import { colors } from '../../utils/colors';
 import QuarterlyTrend from './components/QuarterlyTrend';
 import AudienceSegment from './components/AudienceSegment';
-import FtsRecallStats from './components/FtsRecallStats';
 import AudienceGroupTrend from './components/AudienceGroupTrend';
 import AudienceGroupCommRecallTrend from './components/AudienceGroupCommRecallTrend';
 import BrandAssociationData from './components/BrandAssociationData';
+import FTSDataSummary from './components/FTSDataSummary';
 
 const FtsRecall: React.FC = () => {
   const { ftsRecall, isLoading, error } = useCSVData();
@@ -27,7 +27,7 @@ const FtsRecall: React.FC = () => {
       
       <div className="grid grid-cols-2 gap-6">
         <AudienceSegment data={ftsRecall} />
-        <FtsRecallStats data={ftsRecall} />
+        <FTSDataSummary data={ftsRecall} />
       </div>
       
       <div className="grid grid-cols-1 gap-6">
