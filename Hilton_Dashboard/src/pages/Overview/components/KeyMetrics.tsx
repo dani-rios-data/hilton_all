@@ -9,9 +9,20 @@ interface KeyMetricsProps {
   priceWorthData: PriceWorthData[];
 }
 
-const calculateAverage = (values: number[]): number => {
+const parseValue = (value: string | number): number => {
+  if (typeof value === 'string') {
+    return parseFloat(value.toString().replace(/%/g, ''));
+  }
+  return value;
+};
+
+const calculateAverage = (values: (string | number)[]): number => {
   if (!values.length) return 0;
-  return Math.round(values.reduce((sum, val) => sum + val, 0) / values.length);
+  const numericValues = values
+    .map(parseValue)
+    .filter((val): val is number => typeof val === 'number' && !isNaN(val));
+  if (!numericValues.length) return 0;
+  return Math.round(numericValues.reduce((sum, val) => sum + val, 0) / numericValues.length);
 };
 
 const KeyMetrics: React.FC<KeyMetricsProps> = ({ 

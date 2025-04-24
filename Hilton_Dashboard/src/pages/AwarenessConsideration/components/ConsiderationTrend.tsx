@@ -47,7 +47,12 @@ const ConsiderationTrend: React.FC<ConsiderationTrendProps> = ({ data }) => {
         
         if (brandData.length > 0) {
           // Calcular promedio
-          const total = brandData.reduce((sum, item) => sum + item.value, 0);
+          const total = brandData.reduce((sum, item) => {
+            const value = typeof item.value === 'string' 
+              ? parseFloat(item.value.toString().replace(/%/g, '')) 
+              : item.value;
+            return sum + (typeof value === 'number' ? value : 0);
+          }, 0);
           const average = Math.round(total / brandData.length);
           
           // Guardar en formato clave-valor donde la clave es el nombre de la marca en minúsculas

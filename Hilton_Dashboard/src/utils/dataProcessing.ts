@@ -7,6 +7,13 @@ import {
     ProofOfPointData 
   } from '../types/data';
   
+  const parseValue = (value: string | number): number => {
+    if (typeof value === 'string') {
+      return parseFloat(value.toString().replace(/%/g, ''));
+    }
+    return value;
+  };
+  
   // Process brand spend data for charts
   export const processBrandSpendData = (data: BrandSpendData[]) => {
     return data.map(item => ({
@@ -21,7 +28,10 @@ import {
     
     return hotels.map(hotel => {
       const hotelData = data.filter(item => item.brand === hotel);
-      const avgValue = hotelData.reduce((sum, item) => sum + item.value, 0) / hotelData.length;
+      const avgValue = hotelData.reduce((sum, item) => {
+        const value = parseValue(item.value);
+        return sum + (typeof value === 'number' ? value : 0);
+      }, 0) / hotelData.length;
       
       return {
         name: hotel,
@@ -45,7 +55,10 @@ import {
             (item.quarter || 'N/A') === quarter
           );
           const avgValue = hotelData.length > 0 
-            ? hotelData.reduce((sum, item) => sum + parseFloat((item.value || 0).toString()), 0) / hotelData.length
+            ? hotelData.reduce((sum, item) => {
+                const value = parseValue(item.value || 0);
+                return sum + (typeof value === 'number' ? value : 0);
+              }, 0) / hotelData.length
             : 0;
           result[hotel.toLowerCase()] = Math.round(avgValue);
         }
@@ -121,11 +134,8 @@ import {
         acc[group] = { sum: 0, count: 0 };
       }
       
-      const value = typeof curr[valueField] === 'string' 
-        ? parseFloat(curr[valueField] as string) 
-        : (curr[valueField] as number);
-        
-      if (!isNaN(value)) {
+      const value = parseValue(curr[valueField]);
+      if (typeof value === 'number' && !isNaN(value)) {
         acc[group].sum += value;
         acc[group].count += 1;
       }

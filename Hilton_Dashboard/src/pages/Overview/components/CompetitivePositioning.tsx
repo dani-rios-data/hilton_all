@@ -25,9 +25,14 @@ const CompetitivePositioning: React.FC<CompetitivePositioningProps> = ({ data })
         hotelGroups[item.brand] = { total: 0, count: 0 };
       }
       
-      // AwarenessData.value is already a number according to the definition
-      hotelGroups[item.brand].total += item.value;
-      hotelGroups[item.brand].count += 1;
+      const value = typeof item.value === 'string' 
+        ? parseFloat(item.value.toString().replace(/%/g, '')) 
+        : item.value;
+      
+      if (typeof value === 'number') {
+        hotelGroups[item.brand].total += value;
+        hotelGroups[item.brand].count += 1;
+      }
     });
     
     // Calculate averages and create the format for the chart

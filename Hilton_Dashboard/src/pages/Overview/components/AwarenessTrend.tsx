@@ -33,7 +33,12 @@ const AwarenessTrend: React.FC<AwarenessTrendProps> = ({ data }) => {
       brands.forEach(brand => {
         const brandData = quarterData.filter(item => item.brand === brand);
         if (brandData.length > 0) {
-          const total = brandData.reduce((sum, item) => sum + item.value, 0);
+          const total = brandData.reduce((sum, item) => {
+            const value = typeof item.value === 'string' 
+              ? parseFloat(item.value.toString().replace(/%/g, '')) 
+              : item.value;
+            return sum + (typeof value === 'number' ? value : 0);
+          }, 0);
           result[brand.toLowerCase()] = Math.round(total / brandData.length);
         }
       });
