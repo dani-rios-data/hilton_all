@@ -21,6 +21,10 @@ export const colors = {
   
   // Compatibilidad con código existente
   primary: '#002F61', // Mantener compatibilidad
+  secondary: '#007293', // Para KeyStatistics, MarketingBudget y CompetitivePositioning
+  tertiary: '#06937E', // Para KeyStatistics y MarketingBudget
+  accent: '#799CB6', // Para KeyStatistics y MarketingBudget
+  hilton: '#002F61', // Para MarketingBudget
   competitors: {
     hilton: '#002F61',
     marriott: '#007293',
