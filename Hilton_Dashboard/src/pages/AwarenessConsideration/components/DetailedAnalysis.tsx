@@ -33,9 +33,9 @@ const DetailedAnalysis: React.FC<DetailedAnalysisProps> = ({ awarenessData, cons
     const hiltonAwareness = hiltonAwarenessData.length > 0
       ? Math.round(hiltonAwarenessData.reduce((sum, item) => {
           const value = typeof item.value === 'string' 
-            ? parseFloat(item.value.replace('%', '')) 
+            ? parseFloat(item.value.toString().replace(/%/g, '')) 
             : item.value;
-          return sum + value;
+          return sum + (typeof value === 'number' ? value : 0);
         }, 0) / hiltonAwarenessData.length)
       : 0;
 
@@ -47,7 +47,12 @@ const DetailedAnalysis: React.FC<DetailedAnalysisProps> = ({ awarenessData, cons
     );
     
     const hiltonConsideration = hiltonConsiderationData.length > 0
-      ? Math.round(hiltonConsiderationData.reduce((sum, item) => sum + item.value, 0) / hiltonConsiderationData.length)
+      ? Math.round(hiltonConsiderationData.reduce((sum, item) => {
+          const value = typeof item.value === 'string' 
+            ? parseFloat(item.value.toString().replace(/%/g, '')) 
+            : item.value;
+          return sum + (typeof value === 'number' ? value : 0);
+        }, 0) / hiltonConsiderationData.length)
       : 0;
 
     // Calcular awareness promedio de Marriott
@@ -60,9 +65,9 @@ const DetailedAnalysis: React.FC<DetailedAnalysisProps> = ({ awarenessData, cons
     const marriottAwareness = marriottAwarenessData.length > 0
       ? Math.round(marriottAwarenessData.reduce((sum, item) => {
           const value = typeof item.value === 'string' 
-            ? parseFloat(item.value.replace('%', '')) 
+            ? parseFloat(item.value.toString().replace(/%/g, '')) 
             : item.value;
-          return sum + value;
+          return sum + (typeof value === 'number' ? value : 0);
         }, 0) / marriottAwarenessData.length)
       : 0;
 
@@ -74,7 +79,12 @@ const DetailedAnalysis: React.FC<DetailedAnalysisProps> = ({ awarenessData, cons
     );
     
     const marriottConsideration = marriottConsiderationData.length > 0
-      ? Math.round(marriottConsiderationData.reduce((sum, item) => sum + item.value, 0) / marriottConsiderationData.length)
+      ? Math.round(marriottConsiderationData.reduce((sum, item) => {
+          const value = typeof item.value === 'string' 
+            ? parseFloat(item.value.toString().replace(/%/g, '')) 
+            : item.value;
+          return sum + (typeof value === 'number' ? value : 0);
+        }, 0) / marriottConsiderationData.length)
       : 0;
 
     // Encontrar el segmento de audiencia con el mayor awareness para Hilton
@@ -90,9 +100,9 @@ const DetailedAnalysis: React.FC<DetailedAnalysisProps> = ({ awarenessData, cons
 
     audienceAwarenessData.forEach(item => {
       const value = typeof item.value === 'string' 
-        ? parseFloat(item.value.replace('%', '')) 
+        ? parseFloat(item.value.toString().replace(/%/g, '')) 
         : item.value;
-      if (value > highestAudienceValue && item.audience) {
+      if (typeof value === 'number' && value > highestAudienceValue && item.audience) {
         highestAudienceValue = value;
         highestAudienceName = item.audience;
       }

@@ -46,16 +46,21 @@ const HiltonMetricsTrend: React.FC<HiltonMetricsTrendProps> = ({ awarenessData, 
       const awarenessValue = quarterAwareness.length > 0
         ? Math.round(quarterAwareness.reduce((sum, item) => {
             const value = typeof item.value === 'string' 
-              ? parseFloat(item.value.replace('%', '')) 
+              ? parseFloat(item.value.toString().replace(/%/g, '')) 
               : item.value;
-            return sum + value;
+            return sum + (typeof value === 'number' ? value : 0);
           }, 0) / quarterAwareness.length)
         : null;
 
       // Procesar datos de consideration
       const quarterConsideration = considerationFiltered.filter(item => item.quarter === quarter);
       const considerationValue = quarterConsideration.length > 0
-        ? Math.round(quarterConsideration.reduce((sum, item) => sum + item.value, 0) / quarterConsideration.length)
+        ? Math.round(quarterConsideration.reduce((sum, item) => {
+            const value = typeof item.value === 'string' 
+              ? parseFloat(item.value.toString().replace(/%/g, '')) 
+              : item.value;
+            return sum + (typeof value === 'number' ? value : 0);
+          }, 0) / quarterConsideration.length)
         : null;
 
       return {

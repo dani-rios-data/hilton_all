@@ -31,9 +31,9 @@ const DataSummary: React.FC<DataSummaryProps> = ({ awarenessData, considerationD
     const hiltonAwareness = hiltonAwarenessData.length > 0
       ? Math.round(hiltonAwarenessData.reduce((sum, item) => {
           const value = typeof item.value === 'string' 
-            ? parseFloat(item.value.replace('%', '')) 
+            ? parseFloat(item.value.toString().replace(/%/g, '')) 
             : item.value;
-          return sum + value;
+          return sum + (typeof value === 'number' ? value : 0);
         }, 0) / hiltonAwarenessData.length)
       : 0;
 
@@ -45,7 +45,12 @@ const DataSummary: React.FC<DataSummaryProps> = ({ awarenessData, considerationD
     );
     
     const hiltonConsideration = hiltonConsiderationData.length > 0
-      ? Math.round(hiltonConsiderationData.reduce((sum, item) => sum + item.value, 0) / hiltonConsiderationData.length)
+      ? Math.round(hiltonConsiderationData.reduce((sum, item) => {
+          const value = typeof item.value === 'string' 
+            ? parseFloat(item.value.toString().replace(/%/g, '')) 
+            : item.value;
+          return sum + (typeof value === 'number' ? value : 0);
+        }, 0) / hiltonConsiderationData.length)
       : 0;
 
     // Encontrar el segmento de audiencia con el mayor awareness para Hilton
@@ -61,9 +66,9 @@ const DataSummary: React.FC<DataSummaryProps> = ({ awarenessData, considerationD
 
     audienceAwarenessData.forEach(item => {
       const value = typeof item.value === 'string' 
-        ? parseFloat(item.value.replace('%', '')) 
+        ? parseFloat(item.value.toString().replace(/%/g, '')) 
         : item.value;
-      if (value > highestAudienceValue && item.audience) {
+      if (typeof value === 'number' && value > highestAudienceValue && item.audience) {
         highestAudienceValue = value;
         highestAudienceName = item.audience;
       }
