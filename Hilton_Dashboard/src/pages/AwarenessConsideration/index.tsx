@@ -5,7 +5,8 @@ import AwarenessCombined from './components/AwarenessCombined';
 import AwarenessTrend from './components/AwarenessTrend';
 import ConsiderationTrend from './components/ConsiderationTrend';
 import AudienceAwareness from './components/AudienceAwareness';
-import AwarenessMetrics from './components/AwarenessMetrics';
+import DataSummary from './components/DataSummary';
+import DetailedAnalysis from './components/DetailedAnalysis';
 
 const AwarenessConsideration: React.FC = () => {
   const { awareness, consideration, isLoading, error } = useCSVData();
@@ -34,7 +35,8 @@ const AwarenessConsideration: React.FC = () => {
         <ConsiderationTrend data={consideration} />
       </div>
       
-      <AwarenessMetrics awarenessData={awareness} considerationData={consideration} />
+      <DataSummary awarenessData={awareness} considerationData={consideration} />
+      <DetailedAnalysis awarenessData={awareness} considerationData={consideration} />
     </div>
   );
 };

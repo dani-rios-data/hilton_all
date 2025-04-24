@@ -59,20 +59,30 @@ const ConsiderationTrend: React.FC<ConsiderationTrendProps> = ({ data }) => {
     });
   }, [data]);
 
-  // Calcular el valor máximo para ajustar el dominio del eje Y
-  const maxValue = useMemo(() => {
-    if (trendData.length === 0) return 100;
+  // Calcular los valores mínimo y máximo para ajustar el dominio del eje Y
+  const { minValue, maxValue } = useMemo(() => {
+    if (!trendData || trendData.length === 0) return { minValue: 0, maxValue: 100 };
     
+    let min = Infinity;
     let max = 0;
+
     trendData.forEach(item => {
       Object.keys(item).forEach(key => {
-        if (key !== 'name' && item[key] > max) {
-          max = item[key];
+        if (key !== 'name') {
+          const value = item[key];
+          if (value < min) min = value;
+          if (value > max) max = value;
         }
       });
     });
+
+    // Si min sigue siendo Infinity, significa que no hay datos válidos
+    if (min === Infinity) min = 0;
     
-    return Math.ceil(max) + 5; // Añadir 5 puntos al máximo
+    return { 
+      minValue: Math.max(0, Math.floor(min) - 5), // Empezar 5 puntos por debajo del mínimo, pero no menos de 0
+      maxValue: Math.ceil(max) + 5 // Añadir 5 puntos al máximo
+    };
   }, [trendData]);
 
   if (trendData.length === 0) {
@@ -109,7 +119,7 @@ const ConsiderationTrend: React.FC<ConsiderationTrendProps> = ({ data }) => {
               tickLine={{ stroke: '#E5E7EB' }}
             />
             <YAxis 
-              domain={[0, maxValue]} 
+              domain={[minValue, maxValue]}
               tick={{ fill: '#6B7280', fontSize: 12 }}
               axisLine={{ stroke: '#E5E7EB', strokeWidth: 1 }}
               tickLine={{ stroke: '#E5E7EB' }}

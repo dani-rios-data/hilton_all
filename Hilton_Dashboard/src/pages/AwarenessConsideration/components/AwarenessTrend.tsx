@@ -11,6 +11,7 @@ import {
 import { AwarenessData } from '../../../types/data';
 import { colors } from '../../../utils/colors';
 import CustomTooltip from '../../../components/ui/CustomTooltip';
+import { lineConfig } from '../../../components/ui/ChartComponents';
 
 interface AwarenessTrendProps {
   data: AwarenessData[];
@@ -74,17 +75,31 @@ const AwarenessTrend: React.FC<AwarenessTrendProps> = ({ data }) => {
     });
   }, [data]);
 
-  // Calcular el valor máximo para ajustar el dominio del eje Y
-  const maxValue = useMemo(() => {
-    if (!trendData || trendData.length === 0) return 100;
+  // Calcular los valores mínimo y máximo para ajustar el dominio del eje Y
+  const { minValue, maxValue } = useMemo(() => {
+    if (!trendData || trendData.length === 0) return { minValue: 0, maxValue: 100 };
     
+    let min = Infinity;
     let max = 0;
+    
     trendData.forEach(item => {
+      const hiltonVal = item.hilton !== undefined ? item.hilton : Infinity;
+      const marriottVal = item.marriott !== undefined ? item.marriott : Infinity;
+      
+      if (hiltonVal < min) min = hiltonVal;
+      if (marriottVal < min) min = marriottVal;
+      
       if (item.hilton > max) max = item.hilton;
       if (item.marriott > max) max = item.marriott;
     });
     
-    return Math.ceil(max) + 5; // Añadir 5 puntos al máximo
+    // Si min sigue siendo Infinity, significa que no hay datos válidos
+    if (min === Infinity) min = 0;
+
+    return { 
+      minValue: Math.max(0, Math.floor(min) - 5), // Empezar 5 puntos por debajo del mínimo, pero no menos de 0
+      maxValue: Math.ceil(max) + 5 // Añadir 5 puntos al máximo
+    };
   }, [trendData]);
 
   if (trendData.length === 0) {
@@ -119,7 +134,7 @@ const AwarenessTrend: React.FC<AwarenessTrendProps> = ({ data }) => {
               tickLine={{ stroke: '#E5E7EB' }}
             />
             <YAxis 
-              domain={[0, maxValue]} 
+              domain={[minValue, maxValue]}
               tick={{ fill: '#6B7280', fontSize: 12 }}
               axisLine={{ stroke: '#E5E7EB', strokeWidth: 1 }}
               tickLine={{ stroke: '#E5E7EB' }}
@@ -132,26 +147,24 @@ const AwarenessTrend: React.FC<AwarenessTrendProps> = ({ data }) => {
               iconType="circle"
               wrapperStyle={{ paddingTop: '10px' }}
             />
-            <Line 
-              name="Hilton" 
-              type="monotone" 
-              dataKey="hilton" 
-              stroke={colors.hiltonBlue}
-              strokeWidth={3}
-              dot={{ r: 5, fill: colors.hiltonBlue }}
-              activeDot={{ r: 7 }}
-              animationDuration={1500}
-            />
-            <Line 
-              name="Marriott" 
-              type="monotone" 
-              dataKey="marriott" 
-              stroke={colors.turquoise}
-              strokeWidth={3}
-              dot={{ r: 5, fill: colors.turquoise }}
-              activeDot={{ r: 7 }}
-              animationDuration={1500}
-            />
+            {trendData.length > 0 && trendData[0].hilton !== undefined && (
+              <Line 
+                name="Hilton" 
+                type="monotone" 
+                dataKey="hilton" 
+                stroke={colors.hiltonBlue} 
+                {...lineConfig} 
+              />
+            )}
+            {trendData.length > 0 && trendData[0].marriott !== undefined && (
+              <Line 
+                name="Marriott" 
+                type="monotone" 
+                dataKey="marriott" 
+                stroke={colors.turquoise} 
+                {...lineConfig}
+              />
+            )}
           </LineChart>
         </ResponsiveContainer>
       </div>
