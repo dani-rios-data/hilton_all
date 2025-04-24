@@ -77,37 +77,37 @@ const FTSDataSummary: React.FC<FTSDataSummaryProps> = ({ data }) => {
 
   return (
     <div className="p-4 bg-white rounded shadow-sm">
-      <h3 className="text-lg mb-4" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
+      <h3 className="text-base mb-3" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
         FTS Association & Communication Recall Summary
       </h3>
       
-      <div className="space-y-4">
+      <div className="space-y-3">
         <div className="border-b border-gray-200 pb-2">
-          <h4 className="font-semibold text-gray-700 mb-2">Key Metrics ({summaryData.latestQuarter})</h4>
+          <h4 className="font-semibold text-gray-700 text-xs mb-1">Key Metrics ({summaryData.latestQuarter})</h4>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <p className="text-sm text-gray-600">Total FTS Association:</p>
-              <p className="text-xl font-semibold" style={{ color: colors.hiltonBlue }}>{summaryData.totalFts}%</p>
+              <p className="text-xs text-gray-600">Total FTS Association:</p>
+              <p className="text-lg font-semibold" style={{ color: colors.hiltonBlue }}>{summaryData.totalFts}%</p>
             </div>
             <div>
-              <p className="text-sm text-gray-600">Total Communication Recall:</p>
-              <p className="text-xl font-semibold" style={{ color: colors.turquoise }}>{summaryData.totalRecall}%</p>
+              <p className="text-xs text-gray-600">Total Communication Recall:</p>
+              <p className="text-lg font-semibold" style={{ color: colors.turquoise }}>{summaryData.totalRecall}%</p>
             </div>
           </div>
         </div>
         
         <div>
-          <p className="text-sm text-gray-600">
+          <p className="text-xs text-gray-600">
             <span className="font-semibold">Quarterly Growth:</span> 
             <span className={summaryData.quarterlyGrowth >= 0 ? "text-green-600" : "text-red-600"}>
               {" "}{summaryData.quarterlyGrowth > 0 ? "+" : ""}{summaryData.quarterlyGrowth.toFixed(1)}%
             </span> 
             {summaryData.previousQuarter && ` from ${summaryData.previousQuarter}`}
           </p>
-          <p className="text-sm text-gray-600 mt-3">
+          <p className="text-xs text-gray-600 mt-2">
             Overall, Millennials segment shows the strongest brand association and communication recall metrics, followed by Gen X, with Boomers showing significantly lower engagement with the "For The Stay" campaign across all measured quarters.
           </p>
-          <p className="text-sm text-gray-600 mt-3">
+          <p className="text-xs text-gray-600 mt-2">
             The data suggests that campaign messaging is most effective with younger demographics, indicating potential opportunities to enhance communication strategies targeting the Boomer segment.
           </p>
         </div>
