@@ -25,11 +25,13 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ activeTab, setActiveTab }
             key={tab.id}
             className="px-6 py-3 font-medium"
             style={{ 
-              color: activeTab === tab.id ? colors.hiltonBlue : '#6B7280',
+              color: activeTab === tab.id ? colors.hiltonBlue : colors.inactiveTab,
               borderBottom: activeTab === tab.id ? `3px solid ${colors.hiltonBlue}` : 'none',
               backgroundColor: activeTab === tab.id ? colors.white : colors.hiltonOffWhite,
               fontSize: '15px',
-              margin: '0 2px'
+              margin: '0 2px',
+              fontFamily: 'Helvetica, Arial, sans-serif',
+              transition: 'color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-bottom 0.2s ease-in-out'
             }}
             onClick={() => setActiveTab(tab.id)}
           >

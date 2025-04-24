@@ -49,6 +49,7 @@ export const useCSVData = () => {
                 dynamicTyping: true,
                 skipEmptyLines: true,
                 complete: (results) => {
+                  console.log(`Parsed CSV ${filename}:`, results.data);
                   resolve(results.data);
                 }
               });
@@ -76,16 +77,24 @@ export const useCSVData = () => {
           fetchCSV('hilton_proof_of_point.csv')
         ]);
 
-        console.log("Brand Spend Raw Data:", brandSpendData);
-
         // Process consideration data to match the expected format
-        const processedConsideration = (considerationData as any[]).map(item => ({
-          brand: item.Hotel,
-          value: item.Value,
-          audience: item.Audience,
-          quarter: item.Quarter,
-          category: item.Feature
-        }));
+        const processedConsideration = (considerationData as any[]).map(item => {
+          // Make sure numeric values are properly converted
+          let value = item.Value;
+          if (typeof value === 'string') {
+            value = parseFloat(value);
+          }
+          
+          return {
+            brand: item.Hotel,
+            value: isNaN(value) ? 0 : value,
+            audience: item.Audience,
+            quarter: item.Quarter,
+            category: item.Feature
+          };
+        });
+
+        console.log("Processed consideration data:", processedConsideration);
 
         // Process awareness data to match the expected format
         const processedAwareness = (awarenessData as any[]).map(item => ({
@@ -134,8 +143,6 @@ export const useCSVData = () => {
           country: item["Country Name"] || item.Country || item.country,
           category: item.Category || item.category
         }));
-
-        console.log("Processed Brand Spend Data:", processedBrandSpend);
 
         setData({
           brandSpend: processedBrandSpend as BrandSpendData[],

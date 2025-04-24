@@ -8,6 +8,16 @@ export const lineConfig = {
   dot: false
 };
 
+// Config for chart grid
+export const gridConfig = {
+  strokeDasharray: '3 3',
+  stroke: colors.gridLine
+};
+
+// Config for bar charts radius
+export const barRadius = [4, 4, 0, 0];
+export const horizontalBarRadius = [0, 4, 4, 0];
+
 // Customized label renderer for pie charts
 export const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index, name }: any) => {
   const RADIAN = Math.PI / 180;

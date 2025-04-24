@@ -1,58 +1,30 @@
 export const colors = {
-  primary: '#0057B8', // Hilton Blue
-  secondary: '#F3A935', // Hilton Gold
-  tertiary: '#65C8D0', // Teal
-  accent: '#F26C51', // Coral
-  
-  // Colores básicos
-  hiltonBlue: '#0057B8',
-  turquoise: '#65C8D0',
+  // Colores primarios
+  hiltonBlue: '#002F61',
+  turquoise: '#007293',
   teal: '#06937E',
-  blueTint: '#6E9FB5',
-  turquoiseTint: '#8FB3A7',
+  blueTint: '#686B8C',
+  turquoiseTint: '#799CB6',
+  tealTint: '#8FB3A7',
+  blueShade: '#001137',
+  turquoiseShade: '#005670',
+  tealShade: '#00614F',
   white: '#FFFFFF',
   black: '#000000',
-  hiltonOffWhite: '#F5F5F5',
-  tealTint: '#A7D7D0',
+  hiltonOffWhite: '#F0E9E6',
   
-  // Marcas de Hilton
-  hilton: '#0057B8',
-  waldorf: '#8A5825',
-  conrad: '#4D4F53',
-  curio: '#6E9FB5',
-  doubletree: '#6CB33F',
-  embassy: '#009F4D',
-  homewood: '#00538B',
-  hampton: '#E21836',
+  // Colores para UI
+  borderColor: '#E5E7EB',
+  inactiveTab: '#6B7280',
+  positiveChange: '#059669',
+  gridLine: '#E5E7EB',
   
-  // Colores para gráficos
-  chartColors: [
-    '#0057B8', // Azul primario
-    '#F3A935', // Oro
-    '#65C8D0', // Turquesa
-    '#F26C51', // Coral
-    '#8A5825', // Marrón
-    '#4D4F53', // Gris oscuro
-    '#6E9FB5', // Azul claro
-    '#6CB33F', // Verde
-    '#E21836'  // Rojo
-  ],
-  
-  // Colores para audiencias
-  audiences: {
-    millennials: '#0057B8',
-    genZ: '#F3A935',
-    genX: '#65C8D0',
-    boomers: '#F26C51'
-  },
-  
-  // Competidores
+  // Compatibilidad con código existente
+  primary: '#002F61', // Mantener compatibilidad
   competitors: {
-    hilton: '#0057B8',
-    marriott: '#CF4520',
-    ihg: '#006940',
-    accor: '#E3001B',
-    hyatt: '#6D6E70'
+    hilton: '#002F61',
+    marriott: '#007293',
+    hyatt: '#06937E'
   }
 };
 

@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { 
   LineChart, 
   Line, 
   XAxis, 
   YAxis, 
-  CartesianGrid, 
   Tooltip, 
   Legend, 
   ResponsiveContainer 
@@ -19,15 +18,77 @@ interface ConsiderationTrendProps {
 }
 
 const ConsiderationTrend: React.FC<ConsiderationTrendProps> = ({ data }) => {
-  // Process data - in a real implementation, this would process the ConsiderationData
-  // For demo purposes, using static data matching the mockup
-  const trendData = [
-    { name: 'Q1 2023', hilton: 65, marriott: 63, hyatt: 57 },
-    { name: 'Q2 2023', hilton: 67, marriott: 64, hyatt: 58 },
-    { name: 'Q3 2023', hilton: 69, marriott: 66, hyatt: 59 },
-    { name: 'Q4 2023', hilton: 70, marriott: 67, hyatt: 60 },
-    { name: 'Q1 2024', hilton: 72, marriott: 68, hyatt: 61 }
-  ];
+  // Procesar datos reales del CSV
+  const trendData = useMemo(() => {
+    if (!data || data.length === 0) {
+      console.log("No consideration data available");
+      return [];
+    }
+
+    // Filtrar solo datos de Consideration
+    const considerationData = data.filter(item => item.category === 'Consideration');
+    
+    // Obtener todos los trimestres únicos
+    const quarters = [...new Set(considerationData.map(item => item.quarter))].sort();
+    
+    // Obtener todas las marcas únicas
+    const brands = [...new Set(considerationData.map(item => item.brand))];
+    
+    // Crear datos para cada trimestre
+    return quarters.map(quarter => {
+      // Datos de base para este trimestre
+      const quarterData: Record<string, any> = { name: quarter };
+      
+      // Para cada marca, calcular el valor promedio en ese trimestre
+      brands.forEach(brand => {
+        const brandData = considerationData.filter(
+          item => item.quarter === quarter && item.brand === brand
+        );
+        
+        if (brandData.length > 0) {
+          // Calcular promedio
+          const total = brandData.reduce((sum, item) => sum + item.value, 0);
+          const average = Math.round(total / brandData.length);
+          
+          // Guardar en formato clave-valor donde la clave es el nombre de la marca en minúsculas
+          quarterData[brand.toLowerCase()] = average;
+        }
+      });
+      
+      return quarterData;
+    });
+  }, [data]);
+
+  // Calcular el valor máximo para ajustar el dominio del eje Y
+  const maxValue = useMemo(() => {
+    if (trendData.length === 0) return 100;
+    
+    let max = 0;
+    trendData.forEach(item => {
+      Object.keys(item).forEach(key => {
+        if (key !== 'name' && item[key] > max) {
+          max = item[key];
+        }
+      });
+    });
+    
+    return Math.ceil(max) + 5; // Añadir 5 puntos al máximo
+  }, [trendData]);
+
+  if (trendData.length === 0) {
+    return (
+      <div className="p-4 bg-white rounded shadow-sm">
+        <h3 className="mb-3 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
+          Consideration trend
+        </h3>
+        <div className="h-64 flex items-center justify-center text-gray-500">
+          No data available
+        </div>
+      </div>
+    );
+  }
+  
+  console.log("Processed consideration trend data:", trendData);
 
   return (
     <div className="p-4 bg-white rounded shadow-sm">
@@ -38,41 +99,56 @@ const ConsiderationTrend: React.FC<ConsiderationTrendProps> = ({ data }) => {
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={trendData}
-            margin={{ top: 5, right: 30, left: 20, bottom: 25 }}
+            margin={{ top: 10, right: 30, left: 0, bottom: 25 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
             <XAxis 
               dataKey="name" 
-              tick={{ fill: '#6B7280' }}
+              tick={{ fill: '#6B7280', fontSize: 12 }}
               padding={{ left: 20, right: 20 }}
+              axisLine={{ stroke: '#E5E7EB', strokeWidth: 1 }}
+              tickLine={{ stroke: '#E5E7EB' }}
             />
             <YAxis 
-              domain={[50, 75]} 
-              tick={{ fill: '#6B7280' }}
+              domain={[0, maxValue]} 
+              tick={{ fill: '#6B7280', fontSize: 12 }}
+              axisLine={{ stroke: '#E5E7EB', strokeWidth: 1 }}
+              tickLine={{ stroke: '#E5E7EB' }}
+              tickCount={6}
             />
             <Tooltip content={<CustomTooltip />} />
-            <Legend verticalAlign="bottom" height={36} />
-            <Line 
-              name="Hilton" 
-              type="monotone" 
-              dataKey="hilton" 
-              stroke={colors.hiltonBlue} 
-              {...lineConfig}
+            <Legend 
+              verticalAlign="bottom" 
+              height={36} 
+              iconType="circle"
+              wrapperStyle={{ paddingTop: '10px' }}
             />
-            <Line 
-              name="Marriott" 
-              type="monotone" 
-              dataKey="marriott" 
-              stroke={colors.turquoise} 
-              {...lineConfig}
-            />
-            <Line 
-              name="Hyatt" 
-              type="monotone" 
-              dataKey="hyatt" 
-              stroke={colors.teal} 
-              {...lineConfig}
-            />
+            {trendData.length > 0 && trendData[0].hilton !== undefined && (
+              <Line 
+                name="Hilton" 
+                type="monotone" 
+                dataKey="hilton" 
+                stroke={colors.competitors.hilton} 
+                {...lineConfig}
+              />
+            )}
+            {trendData.length > 0 && trendData[0].marriott !== undefined && (
+              <Line 
+                name="Marriott" 
+                type="monotone" 
+                dataKey="marriott" 
+                stroke={colors.competitors.marriott} 
+                {...lineConfig}
+              />
+            )}
+            {trendData.length > 0 && trendData[0].hyatt !== undefined && (
+              <Line 
+                name="Hyatt" 
+                type="monotone" 
+                dataKey="hyatt" 
+                stroke={colors.competitors.hyatt} 
+                {...lineConfig}
+              />
+            )}
           </LineChart>
         </ResponsiveContainer>
       </div>

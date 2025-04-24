@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: rgba(0, 0, 0, 0.87);
-  background-color: #f5f5f5;
+  color: #000000;
+  background-color: #FFFFFF;
 }
 
 body {
@@ -18,4 +18,145 @@ body {
 #root {
   min-height: 100vh;
   width: 100%;
+}
+
+/* Tipografía */
+h1, h2, h3, h4, h5, h6 {
+  font-family: Georgia, serif;
+  line-height: 1.2;
+}
+
+.page-title {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.section-heading {
+  font-size: 20px;
+  font-weight: 700;
+  color: #002F61;
+}
+
+.sub-heading {
+  font-size: 18px;
+  font-weight: 500;
+  color: #002F61;
+}
+
+.body-text {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.small-text {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.metric-number {
+  font-size: 24px;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.metric-number:hover {
+  color: #007293;
+}
+
+/* Estilos para los componentes de tarjetas */
+.card {
+  @apply bg-white rounded p-4 shadow-sm;
+}
+
+.chart-container {
+  background-color: #FFFFFF;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  padding: 1rem;
+  height: 16rem;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.chart-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.chart-title {
+  font-family: 'Georgia', serif;
+  color: #002F61;
+  font-size: 1.125rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Métricas clave */
+.metric-card {
+  @apply bg-white rounded p-4 shadow-sm;
+  border-top: 4px solid #002F61;
+}
+
+.metric-value {
+  @apply text-3xl font-bold mb-2;
+  color: #002F61;
+}
+
+.metric-change {
+  @apply text-sm font-medium px-3 py-1 rounded-full;
+}
+
+.metric-change-positive {
+  @apply bg-green-100;
+  color: #059669;
+}
+
+.metric-change-negative {
+  @apply bg-red-100 text-red-800;
+}
+
+.metric-description {
+  @apply text-sm;
+  color: #6B7280;
+}
+
+/* Estilos para los gráficos */
+.recharts-cartesian-grid line {
+  stroke: #E5E7EB;
+  stroke-dasharray: 3 3;
+}
+
+.recharts-text {
+  fill: #6B7280;
+}
+
+.recharts-tooltip-wrapper {
+  @apply shadow-sm !rounded;
+}
+
+/* Mejoras para la navegación */
+.nav-tab {
+  @apply py-3 px-6 font-medium;
+  font-family: Helvetica, Arial, sans-serif;
+  transition: color 0.2s ease-in-out, 
+              background-color 0.2s ease-in-out, 
+              border-bottom 0.2s ease-in-out;
+}
+
+.nav-tab-active {
+  @apply bg-white font-medium;
+  color: #002F61;
+  border-bottom: 3px solid #002F61;
+}
+
+.nav-tab-inactive {
+  background-color: #F0E9E6;
+  color: #6B7280;
+}
+
+/* Título del dashboard */
+.dashboard-title {
+  font-family: Georgia, serif;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  color: #002F61;
 } 

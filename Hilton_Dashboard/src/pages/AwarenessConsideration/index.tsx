@@ -5,7 +5,6 @@ import AwarenessCombined from './components/AwarenessCombined';
 import AwarenessTrend from './components/AwarenessTrend';
 import ConsiderationTrend from './components/ConsiderationTrend';
 import AudienceAwareness from './components/AudienceAwareness';
-import FeatureConsideration from './components/FeatureConsideration';
 import AwarenessMetrics from './components/AwarenessMetrics';
 
 const AwarenessConsideration: React.FC = () => {
@@ -25,8 +24,9 @@ const AwarenessConsideration: React.FC = () => {
         Awareness & Consideration Analysis
       </h2>
       
-      <div className="grid grid-cols-1 gap-6">
-        <AwarenessCombined data={awareness} />
+      <div className="grid grid-cols-2 gap-6">
+        <AwarenessCombined data={awareness} considerationData={consideration} />
+        <AudienceAwareness data={awareness} />
       </div>
       
       <div className="grid grid-cols-2 gap-6">
@@ -34,12 +34,7 @@ const AwarenessConsideration: React.FC = () => {
         <ConsiderationTrend data={consideration} />
       </div>
       
-      <div className="grid grid-cols-2 gap-6">
-        <AudienceAwareness data={awareness} />
-        <FeatureConsideration data={consideration} />
-      </div>
-      
-      <AwarenessMetrics />
+      <AwarenessMetrics awarenessData={awareness} considerationData={consideration} />
     </div>
   );
 };
