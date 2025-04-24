@@ -14,7 +14,7 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, label })
         {label && <p className="text-sm font-medium mb-1">{label}</p>}
         {payload.map((entry, index) => (
           <p key={`tooltip-${index}`} className="text-sm" style={{ color: entry.payload?.fill || entry.color }}>
-            {`${entry.name}: ${entry.value}%`}
+            {`${entry.name}: ${entry.value} (${entry.value}%)`}
           </p>
         ))}
       </div>
