@@ -11,10 +11,10 @@ const Layout: React.FC<LayoutProps> = ({ children, setActivePage, activePage }) 
   const navItems = [
     { id: 'overview', label: 'Overview' },
     { id: 'brandspend', label: 'Brand Spend' },
-    { id: 'proof', label: 'Proof of Point' },
     { id: 'priceworth', label: 'Price vs Worth' },
+    { id: 'awareness', label: 'Awareness & Consideration' },
     { id: 'fts', label: 'FTS Association' },
-    { id: 'awareness', label: 'Awareness & Consideration' }
+    { id: 'proof', label: 'Proof of Point' }
   ]
 
   return (
