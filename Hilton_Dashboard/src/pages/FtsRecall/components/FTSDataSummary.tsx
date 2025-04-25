@@ -11,8 +11,8 @@ const FTSDataSummary: React.FC<FTSDataSummaryProps> = ({ data }) => {
     if (!data || data.length === 0) {
       return {
         latestQuarter: 'Q4 2023',
-        totalFts: 0,
-        totalRecall: 0,
+        avgFts: 0,
+        avgRecall: 0,
         millennialsFts: 0,
         millennialsRecall: 0,
         genXFts: 0,
@@ -20,9 +20,7 @@ const FTSDataSummary: React.FC<FTSDataSummaryProps> = ({ data }) => {
         boomersFts: 0,
         boomersRecall: 0,
         quarterlyGrowth: 0,
-        previousQuarter: 'Q3 2023',
-        avgFts: 0,
-        avgRecall: 0
+        previousQuarter: 'Q3 2023'
       };
     }
 
@@ -34,6 +32,15 @@ const FTSDataSummary: React.FC<FTSDataSummaryProps> = ({ data }) => {
     // Filtrar datos para el último y penúltimo trimestre
     const latestData = data.filter(item => item.quarter === latestQuarter);
     const previousData = data.filter(item => item.quarter === previousQuarter);
+
+    // Calcular promedios de todos los trimestres para 'Total'
+    const totalData = data.filter(item => item.audience === 'Total');
+    const avgFts = totalData.length > 0 
+      ? totalData.reduce((sum, item) => sum + (item.value || 0), 0) / totalData.length 
+      : 0;
+    const avgRecall = totalData.length > 0 
+      ? totalData.reduce((sum, item) => sum + (item.communicationRecall || 0), 0) / totalData.length 
+      : 0;
 
     // Obtener datos del total para el último trimestre
     const totalLatest = latestData.find(item => item.audience === 'Total');
@@ -49,17 +56,10 @@ const FTSDataSummary: React.FC<FTSDataSummaryProps> = ({ data }) => {
     const previousFts = totalPrevious?.value || 0;
     const quarterlyGrowth = previousFts > 0 ? ((currentFts - previousFts) / previousFts) * 100 : 0;
 
-    // Calcular promedios de todos los trimestres
-    const totalData = data.filter(item => item.audience === 'Total');
-    const avgFts = totalData.length > 0 
-      ? totalData.reduce((acc, curr) => acc + (curr.value || 0), 0) / totalData.length 
-      : 0;
-    const avgRecall = totalData.length > 0 
-      ? totalData.reduce((acc, curr) => acc + (curr.communicationRecall || 0), 0) / totalData.length 
-      : 0;
-
     return {
       latestQuarter,
+      avgFts,
+      avgRecall,
       totalFts: totalLatest?.value || 0,
       totalRecall: totalLatest?.communicationRecall || 0,
       millennialsFts: millennials?.value || 0,
@@ -69,9 +69,7 @@ const FTSDataSummary: React.FC<FTSDataSummaryProps> = ({ data }) => {
       boomersFts: boomers?.value || 0,
       boomersRecall: boomers?.communicationRecall || 0,
       quarterlyGrowth,
-      previousQuarter,
-      avgFts,
-      avgRecall
+      previousQuarter
     };
   }, [data]);
 
@@ -96,17 +94,15 @@ const FTSDataSummary: React.FC<FTSDataSummaryProps> = ({ data }) => {
       
       <div className="space-y-3">
         <div className="border-b border-gray-200 pb-3">
-          <h4 className="font-semibold text-gray-700 mb-2 text-center">Key Metrics ({summaryData.latestQuarter})</h4>
+          <h4 className="font-semibold text-gray-700 mb-2 text-center">Key Metrics (Average All Quarters)</h4>
           <div className="grid grid-cols-2 gap-4 text-center">
             <div className="flex flex-col items-center">
-              <p className="text-sm text-gray-600">Total FTS Association:</p>
-              <p className="text-xl font-semibold" style={{ color: colors.hiltonBlue }}>{summaryData.totalFts}%</p>
-              <p className="text-xs text-gray-500">(Avg: {summaryData.avgFts.toFixed(1)}%)</p>
+              <p className="text-sm text-gray-600">Average FTS Association:</p>
+              <p className="text-xl font-semibold" style={{ color: colors.hiltonBlue }}>{summaryData.avgFts.toFixed(1)}%</p>
             </div>
             <div className="flex flex-col items-center">
-              <p className="text-sm text-gray-600">Total Communication Recall:</p>
-              <p className="text-xl font-semibold" style={{ color: colors.turquoise }}>{summaryData.totalRecall}%</p>
-              <p className="text-xs text-gray-500">(Avg: {summaryData.avgRecall.toFixed(1)}%)</p>
+              <p className="text-sm text-gray-600">Average Communication Recall:</p>
+              <p className="text-xl font-semibold" style={{ color: colors.turquoise }}>{summaryData.avgRecall.toFixed(1)}%</p>
             </div>
           </div>
         </div>
@@ -124,7 +120,7 @@ const FTSDataSummary: React.FC<FTSDataSummaryProps> = ({ data }) => {
         <div>
           <h4 className="font-semibold text-gray-700 text-sm mb-2">Key Insights</h4>
           <ul className="list-disc pl-4 text-sm text-gray-600 space-y-1">
-            <li>Recall rate exceeds FTS Association by {(summaryData.totalRecall - summaryData.totalFts).toFixed(0)} percentage points</li>
+            <li>Recall rate exceeds FTS Association by {(summaryData.avgRecall - summaryData.avgFts).toFixed(1)} percentage points on average</li>
             <li>Millennials lead both metrics across all measured quarters</li>
             <li>Significant difference between demographic segments</li>
             <li>FTS Association shows positive trend since Q1 2023</li>
