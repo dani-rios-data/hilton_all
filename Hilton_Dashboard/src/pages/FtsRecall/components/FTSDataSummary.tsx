@@ -94,15 +94,15 @@ const FTSDataSummary: React.FC<FTSDataSummaryProps> = ({ data }) => {
       
       <div className="space-y-3">
         <div className="border-b border-gray-200 pb-3">
-          <h4 className="font-semibold text-gray-700 mb-2 text-center">Key Metrics (Average All Quarters)</h4>
-          <div className="grid grid-cols-2 gap-4 text-center">
-            <div className="flex flex-col items-center">
-              <p className="text-sm text-gray-600">Average FTS Association:</p>
-              <p className="text-xl font-semibold" style={{ color: colors.hiltonBlue }}>{summaryData.avgFts.toFixed(1)}%</p>
+          <h4 className="font-semibold text-gray-700 mb-2">Key Metrics ({summaryData.latestQuarter})</h4>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <p className="text-sm text-gray-600">Total FTS Association:</p>
+              <p className="text-xl font-semibold" style={{ color: colors.hiltonBlue }}>{summaryData.totalFts}%</p>
             </div>
-            <div className="flex flex-col items-center">
-              <p className="text-sm text-gray-600">Average Communication Recall:</p>
-              <p className="text-xl font-semibold" style={{ color: colors.turquoise }}>{summaryData.avgRecall.toFixed(1)}%</p>
+            <div>
+              <p className="text-sm text-gray-600">Total Communication Recall:</p>
+              <p className="text-xl font-semibold" style={{ color: colors.turquoise }}>{summaryData.totalRecall}%</p>
             </div>
           </div>
         </div>
@@ -120,7 +120,7 @@ const FTSDataSummary: React.FC<FTSDataSummaryProps> = ({ data }) => {
         <div>
           <h4 className="font-semibold text-gray-700 text-sm mb-2">Key Insights</h4>
           <ul className="list-disc pl-4 text-sm text-gray-600 space-y-1">
-            <li>Recall rate exceeds FTS Association by {(summaryData.avgRecall - summaryData.avgFts).toFixed(1)} percentage points on average</li>
+            <li>Recall rate exceeds FTS Association by {((summaryData.totalRecall || 0) - (summaryData.totalFts || 0)).toFixed(0)} percentage points</li>
             <li>Millennials lead both metrics across all measured quarters</li>
             <li>Significant difference between demographic segments</li>
             <li>FTS Association shows positive trend since Q1 2023</li>
