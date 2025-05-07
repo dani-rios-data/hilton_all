@@ -20,6 +20,8 @@ const App: React.FC = () => {
         return <BrandSpend />
       case 'fts':
         return <FtsRecall />
+      case 'ftsrecall':
+        return <FtsRecall />
       case 'priceworth':
         return <PriceWorth />
       case 'proof':

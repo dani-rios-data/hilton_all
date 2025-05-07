@@ -76,7 +76,7 @@ const AudienceSegment: React.FC<AudienceSegmentProps> = ({ data }) => {
       <div className="mb-3">
         <h3 className="text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
           FTS Association & Communication Recall
-        </h3>
+      </h3>
         <p className="text-sm text-gray-600 mt-1">Audience Segment (Q4 2023)</p>
       </div>
       <div className="h-72">
@@ -94,6 +94,7 @@ const AudienceSegment: React.FC<AudienceSegmentProps> = ({ data }) => {
               domain={[0, maxValue]}
               tick={{ fill: '#6B7280', fontSize: 11 }}
               axisLine={false}
+              tickFormatter={(value) => `${value}%`}
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend 

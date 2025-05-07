@@ -19,7 +19,7 @@ const KeyStatistics: React.FC<KeyStatisticsProps> = ({ data }) => {
   const top3Percentage = ((top3Spend / totalSpend) * 100);
 
   // Calculate average spend per category
-  const avgSpend = totalSpend / data.length;
+  const avgSpend = totalSpend / data.filter(item => item.spend > 0).length;
 
   // Get highest spend category name for tooltip
   const highestCategory = sortedData[0]?.brand || '';
@@ -27,32 +27,40 @@ const KeyStatistics: React.FC<KeyStatisticsProps> = ({ data }) => {
 
   return (
     <div className="grid grid-cols-4 gap-4">
-      <div className="bg-white p-6 rounded-lg shadow-sm" title={`Total marketing spend across all categories`}>
-        <div className="text-3xl font-bold text-[#002F61]">
+      <div className="bg-white p-6 rounded-lg shadow-sm border-t-4 transition-all hover:shadow-md" 
+           style={{ borderTopColor: colors.hiltonBlue }}
+           title={`Total marketing spend across all categories`}>
+        <div className="text-3xl font-bold" style={{ color: colors.hiltonBlue }}>
           ${(totalSpend/1000000).toFixed(1)}M
         </div>
-        <div className="text-sm text-gray-600 mt-2">Total marketing spend</div>
+        <div className="text-sm text-gray-600 mt-2 font-medium">Total marketing spend</div>
       </div>
       
-      <div className="bg-white p-6 rounded-lg shadow-sm" title={`Highest spend: ${highestCategory}`}>
-        <div className="text-3xl font-bold text-[#006FCF]">
+      <div className="bg-white p-6 rounded-lg shadow-sm border-t-4 transition-all hover:shadow-md" 
+           style={{ borderTopColor: colors.turquoise }}
+           title={`Highest spend: ${highestCategory}`}>
+        <div className="text-3xl font-bold" style={{ color: colors.turquoise }}>
           ${(highestSpend/1000000).toFixed(1)}M
         </div>
-        <div className="text-sm text-gray-600 mt-2">Highest spend category</div>
+        <div className="text-sm text-gray-600 mt-2 font-medium">Highest spend category</div>
       </div>
       
-      <div className="bg-white p-6 rounded-lg shadow-sm" title={`Top 3 categories: ${top3Categories}`}>
-        <div className="text-3xl font-bold text-[#00A300]">
+      <div className="bg-white p-6 rounded-lg shadow-sm border-t-4 transition-all hover:shadow-md" 
+           style={{ borderTopColor: colors.teal }}
+           title={`Top 3 categories: ${top3Categories}`}>
+        <div className="text-3xl font-bold" style={{ color: colors.teal }}>
           {Math.round(top3Percentage)}%
         </div>
-        <div className="text-sm text-gray-600 mt-2">Top 3 categories (% of budget)</div>
+        <div className="text-sm text-gray-600 mt-2 font-medium">Top 3 categories (% of budget)</div>
       </div>
       
-      <div className="bg-white p-6 rounded-lg shadow-sm" title={`Average spend across ${data.length} categories`}>
-        <div className="text-3xl font-bold text-[#8C8C8C]">
+      <div className="bg-white p-6 rounded-lg shadow-sm border-t-4 transition-all hover:shadow-md" 
+           style={{ borderTopColor: colors.blueTint }}
+           title={`Average spend across ${data.filter(item => item.spend > 0).length} active categories`}>
+        <div className="text-3xl font-bold" style={{ color: colors.blueTint }}>
           ${(avgSpend/1000000).toFixed(1)}M
         </div>
-        <div className="text-sm text-gray-600 mt-2">Average spend per category</div>
+        <div className="text-sm text-gray-600 mt-2 font-medium">Average spend per category</div>
       </div>
     </div>
   );

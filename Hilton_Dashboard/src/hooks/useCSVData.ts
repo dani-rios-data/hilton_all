@@ -20,6 +20,19 @@ interface CSVDataState {
   error: string | null;
 }
 
+// Función para parsear valores porcentuales o numéricos
+const parseValue = (value: string | number | null | undefined): number => {
+  if (value === null || value === undefined) return 0;
+  if (typeof value === 'number') return value;
+  if (typeof value === 'string') {
+    // Eliminar el símbolo de porcentaje si existe
+    const cleanValue = value.replace(/%/g, '').trim();
+    const parsedValue = parseFloat(cleanValue);
+    return isNaN(parsedValue) ? 0 : parsedValue;
+  }
+  return 0;
+};
+
 export const useCSVData = () => {
   const [data, setData] = useState<CSVDataState>({
     brandSpend: [],
@@ -35,7 +48,7 @@ export const useCSVData = () => {
   useEffect(() => {
     const loadCSVData = async () => {
       try {
-        // Function to fetch and parse a CSV file
+        // Función para obtener y parsear archivos CSV
         const fetchCSV = async (filename: string) => {
           try {
             const response = await fetch(`/${filename}`);
@@ -43,24 +56,22 @@ export const useCSVData = () => {
               throw new Error(`Failed to fetch ${filename}: ${response.status} ${response.statusText}`);
             }
             const text = await response.text();
-            return new Promise((resolve) => {
+            return new Promise<any[]>((resolve) => {
               Papa.parse(text, {
                 header: true,
                 dynamicTyping: true,
                 skipEmptyLines: true,
                 complete: (results) => {
-                  console.log(`Parsed CSV ${filename}:`, results.data);
-                  resolve(results.data);
+                  resolve(results.data as any[]);
                 }
               });
             });
           } catch (error) {
-            console.error(`Error fetching ${filename}:`, error);
             return [];
           }
         };
 
-        // Fetch all CSV files in parallel
+        // Obtener todos los CSV en paralelo
         const [
           brandSpendData,
           considerationData,
@@ -77,96 +88,85 @@ export const useCSVData = () => {
           fetchCSV('hilton_proof_of_point.csv')
         ]);
 
-        // Process consideration data to match the expected format
+        // Procesar datos de consideración para que coincidan con el formato esperado
         const processedConsideration = (considerationData as any[]).map(item => {
-          // Make sure numeric values are properly converted
-          let value = item.Value;
-          if (typeof value === 'string') {
-            value = parseFloat(value);
-          }
-          
+          let value = item.Value || 0;
+          value = parseValue(value);
           return {
             brand: item.Hotel,
-            value: isNaN(value) ? 0 : value,
+            value: value, // Guardar como porcentaje entero (ej: 56)
             audience: item.Audience,
             quarter: item.Quarter,
             category: item.Feature
           };
         });
 
-        console.log("Processed consideration data:", processedConsideration);
-
-        // Process awareness data to match the expected format
+        // Procesar datos de awareness para que coincidan con el formato esperado
         const processedAwareness = (awarenessData as any[]).map(item => {
-          let value = item.Value;
-          if (typeof value === 'string') {
-            value = parseFloat(value);
-          }
+          let value = parseValue(item.Value);
           return {
             brand: item.Hotel,
-            value: isNaN(value) ? 0 : value,
+            value: value, // Guardar como porcentaje entero (ej: 29)
             audience: item.Audience,
             quarter: item.Quarter,
             category: item.Feature
           };
         });
 
-        // Process brand spend data - specifically handle the column name issue
+        // Procesar datos de gasto por marca
         const processedBrandSpend = (brandSpendData as any[]).map(item => {
-          // Check if the CSV has Brand and Spend columns
-          const brand = item.Brand !== undefined ? item.Brand : item.brand;
-          const spend = item.Spend !== undefined ? item.Spend : (item.spend !== undefined ? item.spend : 0);
-          
+          const brand = item.Brand || '';
+          let spend = item.Spend || 0;
+          if (typeof spend === 'string') {
+            spend = parseFloat(spend.replace(/,/g, ''));
+          }
           return {
             brand: brand,
-            spend: typeof spend === 'string' ? parseFloat(spend) : spend,
-            year: item.Year || item.year || 2023,
-            quarter: item.Quarter || item.quarter || "Q4",
-            category: item.Category || item.category || "Marketing"
+            spend: isNaN(spend) ? 0 : spend,
+            year: 2023, // Valor predeterminado
+            quarter: "Q4", // Valor predeterminado
+            category: "Marketing"
           };
         });
 
-        // Process FTS recall data
+        // Procesar datos de FTS Recall
         const processedFtsRecall = (ftsRecallData as any[]).map(item => {
-          let ftsValue = item["FTS Association (%)"];
-          if (typeof ftsValue === 'string') {
-            ftsValue = parseFloat(ftsValue.replace('%', ''));
-          }
+          const ftsValue = parseValue(item["FTS Association (%)"]);
+          const commRecall = parseValue(item["Communication Recall (%)"]);
           return {
-            value: isNaN(ftsValue) ? 0 : ftsValue,
+            value: ftsValue, // Guardar como porcentaje entero (ej: 19)
             audience: item.Audience,
             quarter: item.Quarter,
-            communicationRecall: parseFloat((item["Communication Recall (%)"] || "0").replace('%', ''))
+            communicationRecall: commRecall // Guardar como porcentaje entero (ej: 44)
           };
         });
 
-        // Process price worth data
+        // Procesar datos de price worth
         const processedPriceWorth = (priceWorthData as any[]).map(item => {
-          let value = parseFloat((item["Hilton Worth"] || "0").replace('%', ''));
           return {
-            brand: "Hilton",
-            value: isNaN(value) ? 0 : value,
-            generation: item.Audience,
+            audience: item.Audience,
             quarter: item.Trimestre,
-            category: "Worth"
+            hiltonPrice: parseValue(item["Hilton Price"]),
+            marriottPrice: parseValue(item["Marriott Price"]),
+            hiltonWorth: parseValue(item["Hilton Worth"]),
+            marriottWorth: parseValue(item["Marriott Worth"])
           };
         });
 
-        // Process proof of point data
+        // Procesar datos de proof of point
         const processedProofOfPoint = (proofOfPointData as any[]).map(item => {
-          let value = item.Percentage || item.Value || item.value || 0;
-          if (typeof value === 'string') {
-            value = parseFloat(value);
-          }
+          let value = parseValue(item.Percentage);
           return {
-            brand: item.Brand || item.brand || "Hilton",
-            value: isNaN(value) ? 0 : value,
-            audience: item.Audience || item.audience,
-            country: item["Country Name"] || item.Country || item.country,
-            category: item.Category || item.category
+            brand: "Hilton", // Valor predeterminado si no está presente
+            value: value,
+            audience: item.Audience,
+            country: item.Country,
+            category: item.Category,
+            subcategory: item.Subcategory
           };
         });
 
+        // Configurar los datos procesados
         setData({
           brandSpend: processedBrandSpend as BrandSpendData[],
           consideration: processedConsideration as ConsiderationData[],
@@ -183,7 +183,6 @@ export const useCSVData = () => {
           isLoading: false,
           error: 'Failed to load data. Please try again.'
         }));
-        console.error('Error loading CSV data:', error);
       }
     };
 

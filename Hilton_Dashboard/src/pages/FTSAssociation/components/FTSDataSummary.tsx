@@ -2,11 +2,11 @@ import React, { useMemo } from 'react';
 import { FtsRecallData } from '../../../types/data';
 import { colors } from '../../../utils/colors';
 
-interface FTSDataSummaryProps {
+interface FTSAssociationSummaryProps {
   data: FtsRecallData[];
 }
 
-const FTSDataSummary: React.FC<FTSDataSummaryProps> = ({ data }) => {
+const FTSAssociationSummary: React.FC<FTSAssociationSummaryProps> = ({ data }) => {
   const summaryData = useMemo(() => {
     if (!data || data.length === 0) {
       return {
@@ -23,17 +23,11 @@ const FTSDataSummary: React.FC<FTSDataSummaryProps> = ({ data }) => {
         previousQuarter: 'Q3 2023'
       };
     }
-
-    // Determinar último trimestre dinámicamente
     const quarters = [...new Set(data.map(item => item.quarter))].sort();
     const latestQuarter = quarters[quarters.length - 1];
     const previousQuarter = quarters[quarters.length - 2] || '';
-
-    // Filtrar datos para el último y penúltimo trimestre
     const latestData = data.filter(item => item.quarter === latestQuarter);
     const previousData = data.filter(item => item.quarter === previousQuarter);
-
-    // Calcular promedios de todos los trimestres para 'Total'
     const totalData = data.filter(item => item.audience === 'Total');
     const avgFts = totalData.length > 0 
       ? totalData.reduce((sum, item) => sum + (item.value || 0), 0) / totalData.length 
@@ -41,21 +35,14 @@ const FTSDataSummary: React.FC<FTSDataSummaryProps> = ({ data }) => {
     const avgRecall = totalData.length > 0 
       ? totalData.reduce((sum, item) => sum + (item.communicationRecall || 0), 0) / totalData.length 
       : 0;
-
-    // Obtener datos del total para el último trimestre
     const totalLatest = latestData.find(item => item.audience === 'Total');
     const totalPrevious = previousData.find(item => item.audience === 'Total');
-
-    // Obtener datos por segmento demográfico
     const millennials = latestData.find(item => item.audience === 'Millennials');
     const genX = latestData.find(item => item.audience === 'Gen X');
     const boomers = latestData.find(item => item.audience === 'Boomers');
-
-    // Calcular crecimiento del FTS Association (si hay datos del trimestre anterior)
     const currentFts = totalLatest?.value || 0;
     const previousFts = totalPrevious?.value || 0;
     const quarterlyGrowth = previousFts > 0 ? ((currentFts - previousFts) / previousFts) * 100 : 0;
-
     return {
       latestQuarter,
       avgFts,
@@ -91,31 +78,28 @@ const FTSDataSummary: React.FC<FTSDataSummaryProps> = ({ data }) => {
       <h3 className="text-lg mb-3" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
         FTS Association & Communication Recall Summary
       </h3>
-      
       <div className="space-y-3">
         <div className="border-b border-gray-200 pb-3">
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-sm text-gray-600">Average FTS Association:</p>
-              <p className="text-xl font-semibold" style={{ color: colors.hiltonBlue }}>17.2%</p>
+              <p className="text-xl font-semibold" style={{ color: colors.hiltonBlue }}>{summaryData.avgFts.toFixed(1)}%</p>
             </div>
             <div>
               <p className="text-sm text-gray-600">Average Communication Recall:</p>
-              <p className="text-xl font-semibold" style={{ color: colors.turquoise }}>42.4%</p>
+              <p className="text-xl font-semibold" style={{ color: colors.turquoise }}>{summaryData.avgRecall.toFixed(1)}%</p>
             </div>
           </div>
         </div>
-        
         <div className="border-b border-gray-200 pb-3">
           <p className="text-sm text-gray-600">
             <span className="font-semibold">Quarterly Growth:</span> 
             <span className={summaryData.quarterlyGrowth >= 0 ? "text-green-600" : "text-red-600"}>
-              {" "}{summaryData.quarterlyGrowth > 0 ? "+" : ""}{summaryData.quarterlyGrowth.toFixed(1)}%
+              {summaryData.quarterlyGrowth > 0 ? "+" : ""}{summaryData.quarterlyGrowth.toFixed(1)}%
             </span> 
             {summaryData.previousQuarter && ` from ${summaryData.previousQuarter}`}
           </p>
         </div>
-
         <div>
           <h4 className="font-semibold text-gray-700 text-sm mb-2">Key Insights</h4>
           <ul className="list-disc pl-4 text-sm text-gray-600 space-y-1">
@@ -130,4 +114,4 @@ const FTSDataSummary: React.FC<FTSDataSummaryProps> = ({ data }) => {
   );
 };
 
-export default FTSDataSummary; 
+export default FTSAssociationSummary; 

@@ -128,6 +128,7 @@ const HiltonMetricsTrend: React.FC<HiltonMetricsTrendProps> = ({ awarenessData, 
               axisLine={{ stroke: '#E5E7EB', strokeWidth: 1 }}
               tickLine={{ stroke: '#E5E7EB' }}
               tickCount={6}
+              tickFormatter={(value) => `${value}%`}
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend 

@@ -28,7 +28,7 @@ const AwarenessConsideration: React.FC = () => {
       </h2>
       
       <DataSummary awarenessData={awareness} considerationData={consideration} />
-
+      
       <div className="grid grid-cols-2 gap-6">
         <AwarenessCombined data={awareness} considerationData={consideration} />
         <AudienceAwareness data={awareness} />

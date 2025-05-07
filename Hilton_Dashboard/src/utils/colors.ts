@@ -19,6 +19,14 @@ export const colors = {
   positiveChange: '#059669',
   gridLine: '#E5E7EB',
   
+  // Colores específicos para Price/Worth
+  priceWorth: {
+    hiltonPrice: '#002F61',    // hiltonBlue
+    hiltonWorth: '#007293',    // turquoise
+    marriottPrice: '#686B8C',  // blueTint
+    marriottWorth: '#06937E'   // teal (un tono más fuerte que tealTint)
+  },
+  
   // Compatibilidad con código existente
   primary: '#002F61', // Mantener compatibilidad
   secondary: '#007293', // Para KeyStatistics, MarketingBudget y CompetitivePositioning

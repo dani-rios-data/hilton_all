@@ -11,10 +11,10 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ activeTab, setActiveTab }
   const tabs = [
     { id: 'overview' as TabType, label: 'Overview' },
     { id: 'brandSpend' as TabType, label: 'Brand Spend' },
-    { id: 'proofOfPoint' as TabType, label: 'Proof of Point' },
     { id: 'priceWorth' as TabType, label: 'Price vs Worth' },
+    { id: 'awareness' as TabType, label: 'Awareness & Consideration' },
     { id: 'ftsRecall' as TabType, label: 'FTS Association' },
-    { id: 'awareness' as TabType, label: 'Awareness & Consideration' }
+    { id: 'proofOfPoint' as TabType, label: 'Proof of Point' }
   ];
 
   return (

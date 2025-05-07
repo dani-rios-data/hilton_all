@@ -4,8 +4,9 @@ import { colors } from '../../utils/colors';
 import PriceWorthByGeneration from './components/PriceWorthByGeneration';
 import CompetitiveComparison from './components/CompetitiveComparison';
 import PriceWorthTrend from './components/PriceWorthTrend';
-import ValuePriceRatio from './components/ValuePriceRatio';
 import CompetitiveDataAnalysis from './components/CompetitiveDataAnalysis';
+import HiltonPriceWorthByGeneration from './components/HiltonPriceWorthByGeneration';
+import MarriottPriceWorthByGeneration from './components/MarriottPriceWorthByGeneration';
 
 const PriceWorth: React.FC = () => {
   const { priceWorth, isLoading, error } = useCSVData();
@@ -31,9 +32,10 @@ const PriceWorth: React.FC = () => {
       
       <PriceWorthTrend data={priceWorth} />
       
-      <ValuePriceRatio data={priceWorth} />
+      <HiltonPriceWorthByGeneration data={priceWorth} />
+      <MarriottPriceWorthByGeneration data={priceWorth} />
       
-      <CompetitiveDataAnalysis />
+      <CompetitiveDataAnalysis data={priceWorth} />
     </div>
   );
 };

@@ -29,12 +29,12 @@ export interface FtsRecallData {
 }
 
 export interface PriceWorthData {
-  brand: string;
-  value: number;
-  generation: string;
+  audience: string;
   quarter: string;
-  category?: string;
-  metric?: string;
+  hiltonPrice: string | number;
+  marriottPrice: string | number;
+  hiltonWorth: string | number;
+  marriottWorth: string | number;
 }
 
 export interface ProofOfPointData {
@@ -45,6 +45,7 @@ export interface ProofOfPointData {
   audience?: string;
   country?: string;
   metric?: string;
+  subcategory?: string;
 }
 
 // For chart components

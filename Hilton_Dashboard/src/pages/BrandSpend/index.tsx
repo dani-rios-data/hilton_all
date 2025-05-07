@@ -2,7 +2,6 @@ import React from 'react';
 import { useCSVData } from '../../hooks/useCSVData';
 import { processBrandSpendData } from '../../utils/dataProcessing';
 import { colors } from '../../utils/colors';
-import SpendDistribution from './components/SpendDistribution';
 import MarketingBudget from './components/MarketingBudget';
 import KeyStatistics from './components/KeyStatistics';
 import DataSummary from './components/DataSummary';
@@ -22,15 +21,21 @@ const BrandSpend: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      <h2 className="mb-4 text-xl font-serif" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-        Key Metrics
-      </h2>
+      <div>
+        <h1 className="text-2xl font-serif mb-4" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
+          Brand Spend Analysis
+        </h1>
+      </div>
 
-      <KeyStatistics data={processedData} />
+      <div>
+        <h2 className="mb-4 text-xl font-serif" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
+          Key Metrics
+        </h2>
+        <KeyStatistics data={processedData} />
+      </div>
       
       <div className="space-y-6">
         <MarketingBudget data={processedData} />
-        <SpendDistribution data={processedData.slice(0, 7)} />
       </div>
       
       <DataSummary />

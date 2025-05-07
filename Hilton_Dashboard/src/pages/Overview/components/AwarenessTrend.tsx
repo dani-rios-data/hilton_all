@@ -60,7 +60,7 @@ const AwarenessTrend: React.FC<AwarenessTrendProps> = ({ data }) => {
       });
     });
     
-    return Math.min(100, Math.ceil(max) + 5); // 5 points higher than max, capped at 100
+    return Math.ceil(max) + 5; // Siempre añadir 5 puntos al máximo
   }, [chartData]);
   
   if (chartData.length === 0) {

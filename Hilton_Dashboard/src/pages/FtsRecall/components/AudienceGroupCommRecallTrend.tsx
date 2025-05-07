@@ -24,6 +24,8 @@ interface ProcessedRecallTrendData {
   quarter: string;
   Millennials?: number; 
   "Gen X"?: number;
+  Boomers?: number;
+  Total?: number;
 }
 
 // Helper para ordenar trimestres
@@ -40,7 +42,7 @@ const AudienceGroupCommRecallTrend: React.FC<AudienceGroupCommRecallTrendProps> 
   const trendData = useMemo((): ProcessedRecallTrendData[] => {
     if (!data || data.length === 0) return [];
 
-    const audienceGroups = ['Millennials', 'Gen X']; 
+    const audienceGroups = ['Millennials', 'Gen X', 'Boomers', 'Total']; 
     const filteredData = data.filter(item => audienceGroups.includes(item.audience));
 
     const groupedByQuarter: { [quarter: string]: { [audience: string]: number } } = {};
@@ -56,7 +58,9 @@ const AudienceGroupCommRecallTrend: React.FC<AudienceGroupCommRecallTrendProps> 
     const result: ProcessedRecallTrendData[] = Object.entries(groupedByQuarter).map(([quarter, values]) => ({
       quarter: quarter,
       Millennials: values.Millennials,
-      "Gen X": values["Gen X"]
+      "Gen X": values["Gen X"],
+      Boomers: values.Boomers,
+      Total: values.Total
     }));
 
     return result.sort((a, b) => sortQuarters(a.quarter, b.quarter));
@@ -72,6 +76,10 @@ const AudienceGroupCommRecallTrend: React.FC<AudienceGroupCommRecallTrendProps> 
           if (item.Millennials !== undefined && item.Millennials > max) max = item.Millennials;
           if (item["Gen X"] !== undefined && item["Gen X"] < min) min = item["Gen X"];
           if (item["Gen X"] !== undefined && item["Gen X"] > max) max = item["Gen X"];
+          if (item.Boomers !== undefined && item.Boomers < min) min = item.Boomers;
+          if (item.Boomers !== undefined && item.Boomers > max) max = item.Boomers;
+          if (item.Total !== undefined && item.Total < min) min = item.Total;
+          if (item.Total !== undefined && item.Total > max) max = item.Total;
       });
       if (min === Infinity) min = 0;
       const minValue = Math.max(0, Math.floor(min) - 5);
@@ -83,10 +91,10 @@ const AudienceGroupCommRecallTrend: React.FC<AudienceGroupCommRecallTrendProps> 
       return (
         <div className="p-4 bg-white rounded shadow-sm">
             <h3 className="mb-3 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-                Communication Recall: Quarterly trend by audience group {/* Título actualizado */}
+                Communication Recall: Quarterly trend by audience group
             </h3>
             <div className="h-64 flex items-center justify-center text-gray-500">
-                No recall trend data available for Millennials or Gen X.
+                No recall trend data available.
             </div>
         </div>
       );
@@ -95,7 +103,7 @@ const AudienceGroupCommRecallTrend: React.FC<AudienceGroupCommRecallTrendProps> 
   return (
     <div className="p-4 bg-white rounded shadow-sm">
       <h3 className="mb-3 text-lg" style={{ fontFamily: 'Georgia, serif', color: colors.hiltonBlue }}>
-        Communication Recall: Quarterly trend by audience group {/* Título actualizado */}
+        Communication Recall: Quarterly trend by audience group
       </h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
@@ -117,9 +125,19 @@ const AudienceGroupCommRecallTrend: React.FC<AudienceGroupCommRecallTrendProps> 
             <Tooltip content={<CustomTooltip />} />
             <Legend verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: '11px' }} iconType="circle" />
             
+            {/* Total Recall */}
+            <Line 
+              name="Total"
+              type="monotone" 
+              dataKey="Total" 
+              stroke="#333333" 
+              strokeDasharray="5 5"
+              {...lineConfig}
+            />
+            
             {/* Millennials Recall */}
             <Line 
-              name="Millennials" // Mantener nombre para leyenda compartida visualmente
+              name="Millennials"
               type="monotone" 
               dataKey="Millennials" 
               stroke={colors.hiltonBlue} 
@@ -128,10 +146,19 @@ const AudienceGroupCommRecallTrend: React.FC<AudienceGroupCommRecallTrendProps> 
             
             {/* Gen X Recall */}
             <Line 
-              name="Gen X" // Mantener nombre para leyenda compartida visualmente
+              name="Gen X"
               type="monotone" 
               dataKey="Gen X" 
               stroke={colors.turquoise} 
+              {...lineConfig}
+            />
+            
+            {/* Boomers Recall */}
+            <Line 
+              name="Boomers"
+              type="monotone" 
+              dataKey="Boomers" 
+              stroke="#AA5E30" 
               {...lineConfig}
             />
           </LineChart>

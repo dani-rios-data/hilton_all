@@ -18,12 +18,13 @@ interface AudienceGroupTrendProps {
   data: FtsRecallData[];
 }
 
-// Interfaz para los datos procesados (asegurando valores numéricos para las audiencias)
+// Interfaz para los datos procesados
 interface ProcessedTrendData {
   quarter: string;
-  Millennials?: number; // Hacer opcionales y explícitamente number
+  Millennials?: number;
   "Gen X"?: number;
-  // Añadir otras audiencias si se necesitan
+  Boomers?: number;
+  Total?: number;
 }
 
 // Helper para ordenar trimestres
@@ -39,7 +40,7 @@ const AudienceGroupTrend: React.FC<AudienceGroupTrendProps> = ({ data }) => {
   const trendData = useMemo((): ProcessedTrendData[] => {
     if (!data || data.length === 0) return [];
 
-    const audienceGroups = ['Millennials', 'Gen X']; 
+    const audienceGroups = ['Millennials', 'Gen X', 'Boomers', 'Total']; 
     const filteredData = data.filter(item => audienceGroups.includes(item.audience));
 
     // Agrupar por trimestre, asegurando que los valores sean números
@@ -56,23 +57,15 @@ const AudienceGroupTrend: React.FC<AudienceGroupTrendProps> = ({ data }) => {
     // Mapear a la interfaz ProcessedTrendData
     const result: ProcessedTrendData[] = Object.entries(groupedByQuarter).map(([quarter, values]) => ({
       quarter: quarter,
-      Millennials: values.Millennials, // Mapear explícitamente
-      "Gen X": values["Gen X"]
+      Millennials: values.Millennials,
+      "Gen X": values["Gen X"],
+      Boomers: values.Boomers,
+      Total: values.Total
     }));
 
     return result.sort((a, b) => sortQuarters(a.quarter, b.quarter));
 
   }, [data]);
-
-  // Eliminar datos estáticos
-  /*
-  const millennialsData = [
-    ...
-  ];
-  const genXData = [
-    ...
-  ];
-  */
   
   // Calcular dominio Y dinámico
   const yDomain = useMemo(() => {
@@ -82,17 +75,23 @@ const AudienceGroupTrend: React.FC<AudienceGroupTrendProps> = ({ data }) => {
       let max = 0;
 
       trendData.forEach(item => {
-          // Revisar Millennials si existe
+          // Revisar todos los grupos de audiencia
           if (item.Millennials !== undefined) {
             if (item.Millennials < min) min = item.Millennials;
             if (item.Millennials > max) max = item.Millennials;
           }
-          // Revisar Gen X si existe
           if (item["Gen X"] !== undefined) {
             if (item["Gen X"] < min) min = item["Gen X"];
             if (item["Gen X"] > max) max = item["Gen X"];
           }
-          // Añadir otros grupos aquí si se incluyen más adelante
+          if (item.Boomers !== undefined) {
+            if (item.Boomers < min) min = item.Boomers;
+            if (item.Boomers > max) max = item.Boomers;
+          }
+          if (item.Total !== undefined) {
+            if (item.Total < min) min = item.Total;
+            if (item.Total > max) max = item.Total;
+          }
       });
       
       // Si no se encontraron datos válidos, min seguirá siendo Infinity
@@ -111,7 +110,7 @@ const AudienceGroupTrend: React.FC<AudienceGroupTrendProps> = ({ data }) => {
                 Quarterly trend by audience group
             </h3>
             <div className="h-64 flex items-center justify-center text-gray-500">
-                No trend data available for Millennials or Gen X.
+                No trend data available.
             </div>
         </div>
       );
@@ -132,16 +131,26 @@ const AudienceGroupTrend: React.FC<AudienceGroupTrendProps> = ({ data }) => {
             <XAxis 
               dataKey="quarter" 
               type="category" 
-              // allowDuplicatedCategory={false} // No necesario con datos agrupados
               tick={{ fill: '#6B7280', fontSize: 11 }} // Reducir fuente
               padding={{ left: 20, right: 20 }}
             />
             <YAxis 
-              domain={yDomain} // Usar dominio dinámico
-              tick={{ fill: '#6B7280', fontSize: 11 }} // Reducir fuente
+              tick={{ fill: '#6B7280', fontSize: 11 }}
+              domain={yDomain}
+              tickFormatter={(value) => `${value}%`}
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: '11px' }} iconType="circle" /> {/* Ajustar leyenda */}
+            
+            {/* Total data */}
+            <Line 
+              name="Total"
+              type="monotone" 
+              dataKey="Total" 
+              stroke="#333333" 
+              strokeDasharray="5 5"
+              {...lineConfig}
+            />
             
             {/* Millennials data */}
             <Line 
@@ -158,6 +167,15 @@ const AudienceGroupTrend: React.FC<AudienceGroupTrendProps> = ({ data }) => {
               type="monotone" 
               dataKey="Gen X" 
               stroke={colors.turquoise} 
+              {...lineConfig}
+            />
+            
+            {/* Boomers data */}
+            <Line 
+              name="Boomers"
+              type="monotone" 
+              dataKey="Boomers" 
+              stroke="#AA5E30" 
               {...lineConfig}
             />
           </LineChart>

@@ -13,7 +13,7 @@ const Layout: React.FC<LayoutProps> = ({ children, setActivePage, activePage }) 
     { id: 'brandspend', label: 'Brand Spend' },
     { id: 'priceworth', label: 'Price vs Worth' },
     { id: 'awareness', label: 'Awareness & Consideration' },
-    { id: 'fts', label: 'FTS Association' },
+    { id: 'ftsrecall', label: 'FTS Recall' },
     { id: 'proof', label: 'Proof of Point' }
   ]
 

@@ -82,6 +82,7 @@ const QuarterlyTrend: React.FC<QuarterlyTrendProps> = ({ data }) => {
             <YAxis 
               tick={{ fill: '#6B7280', fontSize: 11 }}
               domain={[0, maxYDomain]}
+              tickFormatter={(value) => `${value}%`}
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend 

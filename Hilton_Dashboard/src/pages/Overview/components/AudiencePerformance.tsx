@@ -1,61 +1,101 @@
-import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import React, { useMemo } from 'react';
+import { RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { ConsiderationData } from '../../../types/data';
+import { colors } from '../../../utils/colors';
 
 interface AudiencePerformanceProps {
   data: ConsiderationData[];
 }
 
 const AudiencePerformance: React.FC<AudiencePerformanceProps> = ({ data }) => {
-  const processedData = data
-    .filter(item => item.quarter === 'Q4 2023' && item.brand === 'Hilton')
-    .map(item => ({
-      audience: item.audience,
-      value: item.value
-    }));
+  const processedData = useMemo(() => {
+    // Filtrar los datos para obtener solo Q4 2023
+    const q4Data = data.filter(item => item.quarter === 'Q4 2023');
+    
+    // Obtener las distintas audiencias
+    const audiences = Array.from(new Set(q4Data.map(item => item.audience)))
+      .filter(Boolean) as string[];
+      
+    // Preparar los datos por audiencia
+    return audiences.map(audience => {
+      // Obtener datos de Hilton para esta audiencia
+      const hiltonItem = q4Data.find(item => item.audience === audience && item.brand === 'Hilton');
+      
+      // Obtener datos de Marriott para esta audiencia
+      const marriottItem = q4Data.find(item => item.audience === audience && item.brand === 'Marriott');
+      
+      // Convertir valores a números para el cálculo
+      const hiltonValue = typeof hiltonItem?.value === 'number' ? hiltonItem.value : 0;
+      const marriottValue = typeof marriottItem?.value === 'number' ? marriottItem.value : 0;
+      
+      return {
+        audience,
+        hilton: hiltonValue,
+        marriott: marriottValue,
+        difference: hiltonValue - marriottValue
+      };
+    });
+  }, [data]);
+
+  // Personalizar las etiquetas del tooltip
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      return (
+        <div className="bg-white p-3 border border-gray-200 shadow-sm rounded-md text-sm">
+          <p className="font-medium text-gray-700">{data.audience}</p>
+          <p className="text-[#002F61]">Hilton: {data.hilton}%</p>
+          <p className="text-[#6B7280]">Marriott: {data.marriott}%</p>
+          <p className={data.difference > 0 ? "text-green-600 font-medium" : "text-red-600 font-medium"}>
+            Difference: {data.difference > 0 ? '+' : ''}{data.difference}%
+          </p>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm h-[400px]">
       <h2 className="text-xl font-normal mb-6 text-[#002F61] font-['Georgia']">
-        Audience Performance (Hilton)
+        Consideration by Audience Segment: Hilton vs Marriott (Q4 2023)
       </h2>
       <div className="h-[320px] w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={processedData}
-            margin={{ top: 10, right: 30, left: 20, bottom: 20 }}
-            barSize={30}
-          >
-            <XAxis 
+          <RadarChart cx="50%" cy="50%" outerRadius="75%" data={processedData}>
+            <PolarGrid stroke="#e0e0e0" />
+            <PolarAngleAxis 
               dataKey="audience" 
-              axisLine={false}
-              tickLine={false}
-              tick={{ fontSize: 12, fill: '#666' }}
-              dy={8}
+              tick={{ fill: '#666', fontSize: 12 }} 
             />
-            <YAxis 
-              axisLine={false}
-              tickLine={false}
-              tick={{ fontSize: 12, fill: '#666' }}
-              dx={-8}
+            <PolarRadiusAxis 
+              angle={30} 
+              domain={[0, 'auto']} 
+              tickFormatter={(value) => `${value}%`}
+              tick={{ fontSize: 10 }}
             />
-            <Tooltip
-              cursor={false}
-              contentStyle={{
-                backgroundColor: '#fff',
-                border: '1px solid #e5e7eb',
-                borderRadius: '4px',
-                boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
-              }}
-              formatter={(value: number) => [`${value}%`, 'Consideration']}
+            <Radar 
+              name="Hilton" 
+              dataKey="hilton" 
+              stroke={colors.hiltonBlue || "#002F61"} 
+              fill={colors.hiltonBlue || "#002F61"} 
+              fillOpacity={0.5} 
             />
-            <Bar 
-              dataKey="value" 
-              fill="#002F61"
-              radius={[4, 4, 0, 0]}
-              name="Consideration"
+            <Radar 
+              name="Marriott" 
+              dataKey="marriott" 
+              stroke="#777777" 
+              fill="#777777" 
+              fillOpacity={0.3} 
             />
-          </BarChart>
+            <Tooltip content={<CustomTooltip />} />
+            <Legend 
+              iconType="circle" 
+              align="center"
+              verticalAlign="bottom"
+              wrapperStyle={{ paddingTop: 20 }}
+            />
+          </RadarChart>
         </ResponsiveContainer>
       </div>
     </div>
