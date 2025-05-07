@@ -97,8 +97,12 @@ import {
   // Función para procesar datos de precio-valor
   export const processPriceWorthData = (data: PriceWorthData[]) => {
     return data.map(item => ({
-      ...item,
-      value: typeof item.value === 'string' ? parseFloat(item.value) : item.value
+      audience: item.audience,
+      quarter: item.quarter,
+      hiltonPrice: typeof item.hiltonPrice === 'string' ? parseFloat(item.hiltonPrice) : item.hiltonPrice,
+      marriottPrice: typeof item.marriottPrice === 'string' ? parseFloat(item.marriottPrice) : item.marriottPrice,
+      hiltonWorth: typeof item.hiltonWorth === 'string' ? parseFloat(item.hiltonWorth) : item.hiltonWorth,
+      marriottWorth: typeof item.marriottWorth === 'string' ? parseFloat(item.marriottWorth) : item.marriottWorth
     }));
   };
   
